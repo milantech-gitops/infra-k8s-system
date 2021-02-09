@@ -1,0 +1,7 @@
+#@data/values
+---
+replicas: 3
+app_name: "vault"
+app_namespace: ""
+txtOwnerId: "Z0829272W6OOLE70Z75A" 
+role_arn: ""

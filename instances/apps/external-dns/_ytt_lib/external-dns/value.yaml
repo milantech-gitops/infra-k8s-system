@@ -1,0 +1,7 @@
+#@data/values
+---
+replicas: ""
+app_name: "external-dns"
+app_namespace: ""
+txtOwnerId: "" 
+role_arn: ""

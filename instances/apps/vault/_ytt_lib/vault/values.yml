@@ -1,0 +1,19 @@
+#@data/values
+---
+scaling_factor: ""
+app_name: ""
+app_namespace: ""
+certificate_arn: ""
+role_arn: ""
+
+
+policies:
+- name: root
+  rules: path "secret/*" {
+    capabilities = ["create", "read", "update", "list"]
+    }
+- name: slo
+  rules: path "secret/slo-service" {
+    capabilities = ["create", "read", "update", "delete", "list"]
+    }
+

@@ -1,0 +1,14 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+#@ load("@ytt:library", "library")
+
+#@ def vault_vals():
+scaling_factor: #@ data.values.replicas
+app_name: "vault"
+app_namespace: "realtime-sbx"
+certificate_arn: arn:aws:acm:us-west-2:644712362974:certificate/52eae0de-3926-4546-b287-721477592eb5
+role_arn: "arn:aws:iam::644712362974:role/node117-playbx-us-west-2"
+#@ end
+
+
+--- #@ template.replace(library.get("vault").with_data_values(vault_vals()).eval())

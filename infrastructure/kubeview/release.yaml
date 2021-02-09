@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubeview
+spec:
+  releaseName: kubeview
+  chart:
+    spec:
+      chart: kubeview
+      version: "^0.1.19"
+      sourceRef:
+        kind: HelmRepository
+        name: kubeview
+        namespace: infra-system
+  interval: 1m0s
+  install:
+    remediation:
+      retries: 3
+  values:
+    replicaCount: 2  
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
+        traefik.ingress.kubernetes.io/auth-type: basic
+        traefik.ingress.kubernetes.io/auth-secret: kubeview-auth
+        traefik.ingress.kubernetes.io/frontend-entry-points: "https"
+      hosts:
+        - host: kubeview.milantech.live
+          paths: [ "/" ]
+      tls:
+        - secretName: kubeview-milantech-view-tls
+          hosts:
+            - kubeview.milantech.live

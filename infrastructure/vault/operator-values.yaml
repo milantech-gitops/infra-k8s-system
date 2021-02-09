@@ -1,0 +1,57 @@
+---
+# Default values for vault-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The namespace where the operator watches for vault CRD objects, if not defined
+# all namespaces are watched
+watchNamespace: ""
+syncPeriod: "1m"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+terminationGracePeriodSeconds: 10
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+readinessProbe:
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+
+etcd-operator:
+  enabled: false
+  etcdOperator:
+    commandArgs:
+      cluster-wide: true
+      create-crd: false
+
+
+controller:
+  electionID: vault-ingress-controller-leader
+  ingressClass: nginx-vault
+  extraArgs:
+    enable-ssl-passthrough:
+  publishService:
+    enabled: true
+  scope:
+    enabled: true
+  replicaCount: 2
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: release
+            operator: In
+            values: ["vault-ingress"]
+        topologyKey: kubernetes.io/hostname

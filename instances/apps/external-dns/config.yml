@@ -1,0 +1,14 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+#@ load("@ytt:library", "library")
+
+#@ def externaldns_vals():
+replicas: #@ data.values.replicas
+app_name: "vault"
+app_namespace: "realtime-sbx"
+txtOwnerId: #@ data.values.txtOwnerId
+role_arn: "arn:aws:iam::644712362974:role/pbe-slodev-externaldns-iam-cluster-role"
+#@ end
+
+
+--- #@ template.replace(library.get("external-dns").with_data_values(externaldns_vals()).eval())

@@ -1,0 +1,9 @@
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: labels
+labels:
+  env: sbx
+fieldSpecs:
+  - path: metadata/labels
+    create: true
