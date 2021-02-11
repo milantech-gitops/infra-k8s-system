@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - sources
   - certs
+  - vault
   - kubeview
   - controllers/vmware-tanzu
   - controllers/traefik
-  - vault

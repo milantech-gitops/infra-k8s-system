@@ -1,0 +1,45 @@
+apiVersion: v1
+data:
+  cluster: slodev001
+  cluster-environment: sandbox
+  cluster-name: slodev001
+  cost-center: pbe
+  department: Engineering
+  encryption: encrypted
+  environment: sandbox
+  operating-system: os
+  region: us-east-1
+  security-application: NA
+kind: ConfigMap
+metadata:
+  name: param-config
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: infrastructure
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./infrastructure
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: instances
+  namespace: flux-system
+spec:
+  dependsOn:
+  - name: infrastructure
+  interval: 10m0s
+  path: ./instances/env/sandbox/slodev001
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  validation: client

@@ -1,0 +1,33 @@
+varReference:
+#Vault App
+- path: spec/serviceAccountName
+  kind: App
+#Controllers
+  - path: spec/serviceAccountName
+  kind: App
+#Annotations
+- path: metadata/name
+  kind: ServiceAccount
+- path: metadata/name
+  kind: Role
+- path: metadata/name
+  kind: RoleBinding
+- path: roleRef/name
+  kind: RoleBinding
+- path: subjects/name
+  kind: RoleBinding
+#Namespace
+- path: metadata/name
+  kind: Namespace
+- path: metadata/namespace
+  kind: ServiceAccount
+- path: metadata/namespace
+  kind: Role
+- path: metadata/namespace
+  kind: RoleBinding
+- path: subjects/name
+  kind: RoleBinding
+- path: metadata/namespace
+  kind: ConfigMap
+- path: metadata/namespace
+  kind: App

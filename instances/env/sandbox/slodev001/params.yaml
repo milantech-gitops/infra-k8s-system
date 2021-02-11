@@ -1,0 +1,45 @@
+varReference:
+#Controllers
+- path: spec/serviceAccountName
+  kind: App
+#Vault App
+- path: metadata/namespace
+  kind: Vault
+- path: spec/annotations/iam.amazonaws.com\/role
+  kind: Vault
+- path: spec/config/api_addr
+  kind: Vault
+- path: spec/externalConfig/auth/roles/bound_service_account_names
+  kind: Vault
+- path: spec/externalConfig/auth/roles/bound_service_account_namespaces
+  kind: Vault
+- path: spec/unsealConfig/kubernetes/secretNamespace
+  kind: Vault
+#Annotations
+- path: metadata/name
+  kind: ServiceAccount
+- path: metadata/name
+  kind: Role
+- path: metadata/name
+  kind: RoleBinding
+- path: roleRef/name
+  kind: RoleBinding
+- path: subjects/namespace
+  kind: RoleBinding
+- path: subjects/namespace
+  kind: ClusterRoleBinding
+#Namespace
+- path: metadata/name
+  kind: Namespace
+- path: metadata/namespace
+  kind: ServiceAccount
+- path: metadata/namespace
+  kind: Role
+- path: metadata/namespace
+  kind: RoleBinding
+- path: subjects/name
+  kind: RoleBinding
+- path: metadata/namespace
+  kind: ConfigMap
+- path: metadata/namespace
+  kind: App

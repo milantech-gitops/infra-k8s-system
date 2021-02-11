@@ -1,0 +1,7 @@
+#@data/values
+---
+replicas: 2
+app_name: "external-dns"
+app_namespace: "dns"
+txtOwnerId: "Z0829272W6OOLE70Z75A" 
+role_arn: ""

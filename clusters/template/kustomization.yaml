@@ -1,0 +1,70 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- infrastructure.yaml
+- instances.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+# Using ConfigMap Generator
+configMapGenerator:
+- envs:
+  - param.env
+  name: param-config
+
+# These vars are used for substituing in the parameters from the config map
+# into the Profiles custom resource.
+configurations:
+- param.yaml
+
+#Instance related parameters
+vars:
+- fieldref:
+    fieldPath: data.cluster-environment
+  name: ClusterEnvName
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: param-config
+- fieldref:
+    fieldPath: data.cluster-name
+  name: ClusterName
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: param-config
+
+
+# Using multiple environment config
+# Example e.g., placeholder $CLUSTER_NAME and $
+# CLUSTER_NAME=$(`terraform output var.cluster-name`) #this is your cluster or eks name
+# ENV_NAME=$(`terraform output var.env-name`) #aws account e.g., sandbox, development, staging 
+# sed -i "s/CLUSTER_NAME/${CLUSTER_NAME}/g" cluster/$ENV_NAME/kustomization.yaml
+
+# configMapGenerator:
+# - envs:
+#   - $CLUSTER_NAME.env
+#   name: $CLUSTER_NAME-config
+
+# # These vars are used for substituing in the parameters from the config map
+# # into the Profiles custom resource.
+# configurations:
+# - $CLUSTER_NAME.yaml
+
+# #Instance related parameters
+# vars:
+# - fieldref:
+#     fieldPath: data.cluster-environment
+#   name: ClusterEnvName
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: $CLUSTER_NAME-config
+# - fieldref:
+#     fieldPath: data.cluster-name
+#   name: ClusterName
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: $CLUSTER_NAME-config

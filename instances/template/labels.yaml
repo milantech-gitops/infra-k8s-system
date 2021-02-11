@@ -1,0 +1,9 @@
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: labels
+labels:
+  env: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
+fieldSpecs:
+  - path: metadata/labels
+    create: true
