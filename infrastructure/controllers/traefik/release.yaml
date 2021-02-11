@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: traefik
-        namespace: infra-system
+        namespace: flux-system
   interval: 1m0s
   install:
     remediation:
