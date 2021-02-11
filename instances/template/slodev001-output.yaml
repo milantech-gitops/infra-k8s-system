@@ -35,12 +35,8 @@ metadata:
     catalog.pbe.io/security-application: NA
     catalog.pbe.io/variant: base
   labels:
-    app: vaultcr
-    app.kubernetes.io/component: vault
-    app.kubernetes.io/managed-by: vault-operator
-    app.kubernetes.io/name: vault-cr-raft
     env: pbe-sandbox-slodev001
-  name: vaultcr-sa
+  name: pbe-vault-sa
   namespace: pbe-sandbox-slodev001
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -60,20 +56,24 @@ metadata:
     catalog.pbe.io/security-application: NA
     catalog.pbe.io/variant: base
   labels:
-    app: vaultcr
-    app.kubernetes.io/component: vault
-    app.kubernetes.io/managed-by: vault-operator
-    app.kubernetes.io/name: vault-cr-raft
     env: pbe-sandbox-slodev001
-  name: vaultcr-role
+  name: pbe-vault-role
   namespace: pbe-sandbox-slodev001
 rules:
 - apiGroups:
-  - '*'
+  - ""
   resources:
-  - '*'
+  - secrets
   verbs:
   - '*'
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - update
+  - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -92,20 +92,44 @@ metadata:
     catalog.pbe.io/security-application: NA
     catalog.pbe.io/variant: base
   labels:
-    app: vaultcr
-    app.kubernetes.io/component: vault
-    app.kubernetes.io/managed-by: vault-operator
-    app.kubernetes.io/name: vault-cr-raft
     env: pbe-sandbox-slodev001
-  name: vaultcr-role-binding
+  name: pbe-vault-role-binding
   namespace: pbe-sandbox-slodev001
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: vaultcr-role
+  name: pbe-vault-role
 subjects:
 - kind: ServiceAccount
-  name: vaultcr-sa
+  name: pbe-vault-sa
+  namespace: pbe-sandbox-slodev001
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    app.kubernetes.io/version: v0.0.1
+    catalog.pbe.io/cluster: slodev001
+    catalog.pbe.io/cost-center: pbe
+    catalog.pbe.io/department: Engineering
+    catalog.pbe.io/encryption: encrypted
+    catalog.pbe.io/environment: sandbox
+    catalog.pbe.io/heritage: pbe.io/catalog/sandbox
+    catalog.pbe.io/operating-system: os
+    catalog.pbe.io/owner: InfraTeam
+    catalog.pbe.io/region: us-east-1
+    catalog.pbe.io/security-application: NA
+    catalog.pbe.io/variant: base
+  labels:
+    env: pbe-sandbox-slodev001
+  name: pbe-vault-auth-delegator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: pbe-vault-sa
   namespace: pbe-sandbox-slodev001
 ---
 apiVersion: v1
@@ -118,7 +142,8 @@ data:
   operating-system: os
   region: us-east-1
   security-application: NA
-  vault-sa: vaultcr
+  vault-role: arn:aws:iam::644712362974:role/node117-playbx-us-west-2
+  vault-sa: vaultcr-sa
 kind: ConfigMap
 metadata:
   annotations:
@@ -136,11 +161,11 @@ metadata:
     catalog.pbe.io/variant: base
   labels:
     env: pbe-sandbox-slodev001
-  name: vaultcr-config
+  name: app-config
   namespace: pbe-sandbox-slodev001
 ---
-apiVersion: kappctrl.k14s.io/v1alpha1
-kind: App
+apiVersion: vault.banzaicloud.com/v1alpha1
+kind: Vault
 metadata:
   annotations:
     app.kubernetes.io/version: v0.0.1
@@ -156,25 +181,119 @@ metadata:
     catalog.pbe.io/security-application: NA
     catalog.pbe.io/variant: base
   labels:
-    app: vaultcr
-    app.kubernetes.io/component: vault
-    app.kubernetes.io/managed-by: vault-operator
-    app.kubernetes.io/name: vault-cr-raft
+    app.kubernetes.io/name: vault
     env: pbe-sandbox-slodev001
-  name: vaultcr
+    vault_cr: vault
+  name: pbe-vault
   namespace: pbe-sandbox-slodev001
 spec:
-  deploy:
-  - kapp:
-      delete:
-        rawOptions:
-        - --apply-ignored=true
-  fetch:
-  - git:
-      ref: origin/main
-      subPath: instances/apps/vault
-      url: https://github.com/milantech-gitops/infra-k8s-system
-  serviceAccountName: vaultcr-sa
-  template:
-  - ytt:
-      ignoreUnknownComments: true
+  annotations:
+    common/annotation: "true"
+    iam.amazonaws.com/role: arn:aws:iam::644712362974:role/node117-playbx-us-west-2
+  caNamespaces:
+  - vswh
+  config:
+    api_addr: https://vault.pbe-sandbox-slodev001:8200
+    cluster_addr: https://${.Env.POD_NAME}:8201
+    listener:
+      tcp:
+        address: 0.0.0.0:8200
+        tls_cert_file: /vault/tls/server.crt
+        tls_key_file: /vault/tls/server.key
+    storage:
+      raft:
+        path: /vault/file
+    ui: true
+  externalConfig:
+    auth:
+    - roles:
+      - bound_service_account_names:
+        - default
+        - vault-secrets-webhook
+        - vault
+        - vault-system
+        - vaultcr-sa
+        bound_service_account_namespaces:
+        - default
+        - vswh
+        - vault-system
+        - pbe-sandbox-slodev001
+        name: default
+        policies:
+        - allow_secrets
+        - allow_pki
+        ttl: 10m
+      type: kubernetes
+    policies:
+    - name: allow_secrets
+      rules: path "secret/*" { capabilities = ["create", "read", "update", "delete", "list"] }
+    secrets:
+    - description: General secrets.
+      options:
+        version: 2
+      path: secret
+      type: kv
+    startupSecrets:
+    - data:
+        data:
+          AWS_ACCESS_KEY_ID: secretId
+          AWS_SECRET_ACCESS_KEY: s3cr3t
+      path: secret/data/accounts/aws
+      type: kv
+    - data:
+        data:
+          DOCKER_REPO_PASSWORD: dockerrepopassword
+          DOCKER_REPO_USER: dockerrepouser
+      path: secret/data/dockerrepo
+      type: kv
+    - data:
+        data:
+          MYSQL_PASSWORD: 3xtr3ms3cr3t
+          MYSQL_ROOT_PASSWORD: s3cr3t
+      path: secret/data/mysql
+      type: kv
+  image: vault:1.6.2
+  ingress: {}
+  resources:
+    vault:
+      limits:
+        cpu: 200m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+  serviceAccount: pbe-vault-sa
+  serviceRegistrationEnabled: true
+  serviceType: ClusterIP
+  size: 3
+  statsdDisabled: true
+  unsealConfig:
+    kubernetes:
+      secretNamespace: pbe-sandbox-slodev001
+    options:
+      preFlightChecks: true
+  vaultAnnotations:
+    type/instance: vault
+  vaultConfigurerAnnotations:
+    type/instance: vaultconfigurer
+  vaultConfigurerLabels:
+    example.com/log-format: string
+  vaultEnvsConfig:
+  - name: VAULT_LOG_LEVEL
+    value: debug
+  vaultLabels:
+    example.com/log-format: json
+  veleroEnabled: true
+  volumeClaimTemplates:
+  - metadata:
+      name: vault-raft
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      volumeMode: Filesystem
+  volumeMounts:
+  - mountPath: /vault/file
+    name: vault-raft
