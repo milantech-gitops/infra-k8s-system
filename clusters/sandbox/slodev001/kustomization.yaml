@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - infrastructure.yaml
 - instances.yaml
+- namespace.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

@@ -10,7 +10,7 @@ generatorOptions:
 # Using ConfigMap Generator
 configMapGenerator:
 - envs:
-  - param.env
+  - params.env
   name: param-config
 
 # These vars are used for substituing in the parameters from the config map
