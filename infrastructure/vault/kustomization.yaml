@@ -1,8 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: flux-system
+namespace: vault-system
 resources:
+- namespace.yaml
 - release.yaml
+
 configMapGenerator:
   - name: operator-values
     files:
@@ -10,5 +12,6 @@ configMapGenerator:
   - name: webhook-values
     files:
       - values.yaml=webhook-values.yaml
+
 configurations:
   - kustomizeconfig.yaml

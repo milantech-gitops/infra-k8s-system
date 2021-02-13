@@ -27,9 +27,18 @@ vars:
     apiVersion: v1
     kind: ConfigMap
     name: param-config
+
 - fieldref:
     fieldPath: data.cluster-name
   name: ClusterName
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: param-config
+
+- fieldref:
+    fieldPath: data.cost-center
+  name: NamePrefixCostCenter
   objref:
     apiVersion: v1
     kind: ConfigMap

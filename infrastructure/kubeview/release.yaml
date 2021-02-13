@@ -11,25 +11,13 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kubeview
-        namespace: flux-system
+        namespace: infra-system
   interval: 1m0s
   install:
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: ConfigMap
+      name: kubeview-config-values
   values:
-    replicaCount: 2  
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: "letsencrypt-staging"
-        traefik.ingress.kubernetes.io/auth-type: basic
-        traefik.ingress.kubernetes.io/auth-secret: kubeview-auth
-        traefik.ingress.kubernetes.io/frontend-entry-points: "https"
-      hosts:
-        - host: kubeview.milantech.live
-          paths: [ "/" ]
-      tls:
-        - secretName: kubeview-milantech-view-tls
-          hosts:
-            - kubeview.milantech.live
+    replicaCount: 1

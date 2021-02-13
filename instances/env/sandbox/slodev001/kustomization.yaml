@@ -37,14 +37,14 @@ configurations:
 vars:
 #Vault related parameters
 - fieldref:
-    fieldPath: data.vault-sa
+    fieldpath: data.vault-sa
   name: AppServiceAccountName
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.vault-role
+    fieldpath: data.vault-role
   name: AppServiceAccountRole
   objref:
     apiVersion: v1
@@ -52,56 +52,56 @@ vars:
     name: app-config
 #Annotations
 - fieldref:
-    fieldPath: data.cluster
+    fieldpath: data.cluster
   name: AnnotationsCluster
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.cost-center
+    fieldpath: data.cost-center
   name: AnnotationsCostCenter
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.department
+    fieldpath: data.department
   name: AnnotationsDepartment
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.environment
+    fieldpath: data.environment
   name: AnnotationsEnv
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.region
+    fieldpath: data.region
   name: AnnotationsRegion
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.operating-system
+    fieldpath: data.operating-system
   name: AnnotationsOS
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.encryption
+    fieldpath: data.encryption
   name: AnnotationsEncryption
   objref:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
 - fieldref:
-    fieldPath: data.security-application
+    fieldpath: data.security-application
   name: AnnotationsSecurityApplication
   objref:
     apiVersion: v1

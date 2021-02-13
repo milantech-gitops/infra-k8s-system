@@ -1,0 +1,22 @@
+---
+# Default values for kubeview-values
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The namespace where the operator watches for vault CRD objects, if not defined
+# all namespaces are watched
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    traefik.ingress.kubernetes.io/auth-type: basic
+    traefik.ingress.kubernetes.io/auth-secret: kubeview-auth
+    traefik.ingress.kubernetes.io/frontend-entry-points: "https"
+  hosts:
+    - host: kubeview.milantech.live
+      paths: [ "/" ]
+  tls:
+    - secretName: kubeview-milantech-view-tls
+      hosts:
+        - kubeview.milantech.live

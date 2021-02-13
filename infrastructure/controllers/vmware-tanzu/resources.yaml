@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kbld.k14s.io/images: |
+      - Metas:
+        - Path: /Users/dk/workspace/k14s-go/src/github.com/vmware-tanzu/carvel-kapp-controller
+          Type: local
+        - Dirty: false
+          RemoteURL: git@github.com:k14s/kapp-controller
+          SHA: 05d59b42423648c87927fd59a4e555d750067eba
+          Type: git
+        URL: index.docker.io/k14s/kapp-controller@sha256:8121296ee187b35c3109b11d747ce3eb2c01fb0386f162c89bab1d264189caf8
+  name: kapp-controller
+  # namespace: kapp-controller
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: kapp-controller
+  template:
+    metadata:
+      labels:
+        app: kapp-controller
+    spec:
+      containers:
+      - args: []
+        env:
+        - name: KAPPCTRL_MEM_TMP_DIR
+          value: /etc/kappctrl-mem-tmp
+        image: index.docker.io/k14s/kapp-controller@sha256:8121296ee187b35c3109b11d747ce3eb2c01fb0386f162c89bab1d264189caf8
+        name: kapp-controller
+        resources:
+          requests:
+            cpu: 120m
+            memory: 100Mi
+        securityContext:
+          runAsGroup: 2000
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /etc/kappctrl-mem-tmp
+          name: template-fs
+      securityContext:
+        fsGroup: 3000
+      serviceAccount: kapp-controller-sa
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: template-fs
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kapp-controller-sa
+  # namespace: kapp-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kapp-controller-cluster-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - secrets
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - kappctrl.k14s.io
+  resources:
+  - apps
+  - apps/status
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kapp-controller-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kapp-controller-cluster-role
+subjects:
+- kind: ServiceAccount
+  name: kapp-controller-sa
+  # namespace: kapp-controller
