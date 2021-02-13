@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: certmanager
 resources:
   - release.yaml
-  - cluster-issuer.yaml
-  - cluster-issuer-prod.yaml
+  # - cluster-issuer.yaml
+  # - cluster-issuer-prod.yaml
 
 configMapGenerator:
   - name: certmanager-config-values
