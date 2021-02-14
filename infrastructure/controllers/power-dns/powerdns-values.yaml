@@ -104,7 +104,7 @@ admin:
     enabled: "false"
     class: "traefik"
     path: "/"
-    hostname: "powerdns-admin"
+    hostname: "powerdns-admin.milantech.live"
   requests:
     memory: "512Mi"
     cpu: "300m"
