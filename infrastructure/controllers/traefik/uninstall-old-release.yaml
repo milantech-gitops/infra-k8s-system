@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  # Configuration options for the Helm uninstall action
+  uninstall:
+    timeout: 1m
+    disableHooks: false
+    keepHistory: false
