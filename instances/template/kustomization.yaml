@@ -5,6 +5,8 @@ namePrefix: $(AnnotationsRegion)
 resources:
 - namespace.yaml
 - ../../../base/vault
+- ../../../base/certs
+- ../../../base/traefik
 transformers:
 - labels.yaml
 
