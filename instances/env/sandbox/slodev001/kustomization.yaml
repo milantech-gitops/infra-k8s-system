@@ -4,6 +4,7 @@ namespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
 # namePrefix: sbx-
 resources:
 - namespace.yaml
+- ../../../base/traefik
 - ../../../base/vault
 transformers:
 - labels.yaml
