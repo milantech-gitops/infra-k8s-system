@@ -16,7 +16,7 @@ commonAnnotations:
   app.kubernetes.io/version: v0.0.1
   catalog.pbe.io/heritage: pbe.io/catalog/sandbox
   catalog.pbe.io/variant: base
-  catalog.pbe.io/cluster: $(AnnotationsCluster)  
+  catalog.pbe.io/cluster: $(AnnotationsCluster)
   catalog.pbe.io/owner: InfraTeam
   catalog.pbe.io/cost-center: $(AnnotationsCostCenter)
   catalog.pbe.io/department: $(AnnotationsDepartment)

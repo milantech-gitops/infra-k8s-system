@@ -43,3 +43,6 @@ varReference:
   kind: ConfigMap
 - path: metadata/namespace
   kind: App
+#Instances
+- path: spec/path
+  kind: Kustomization

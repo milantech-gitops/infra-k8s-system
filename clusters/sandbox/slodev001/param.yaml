@@ -1,4 +1,4 @@
 varReference:
-#Instances
+#Clusters
 - path: spec/path
   kind: Kustomization
