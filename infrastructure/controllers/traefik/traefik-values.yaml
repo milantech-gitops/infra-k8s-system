@@ -20,6 +20,7 @@ rbac:
 # All available options available on https://docs.traefik.io/reference/static-configuration/cli/
 ## Use curly braces to pass values: `helm install --set="additionalArguments={--providers.kubernetesingress.ingressclass=traefik-internal,--log.level=DEBUG}"`
 additionalArguments:
+  - --providers.kubernetesingress.ingressclass=traefik-internal
   - --providers.file.filename=/data/traefik-config.yaml
   - --providers.kubernetesIngress=true
   - --entrypoints.websecure.http.tls.certresolver=cloudflare

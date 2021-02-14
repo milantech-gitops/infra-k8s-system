@@ -1,3 +1,4 @@
+---
 apiVersion: "vault.banzaicloud.com/v1alpha1"
 kind: "Vault"
 metadata:
@@ -15,3 +16,24 @@ spec:
             bound_service_account_namespaces: ["default", "vswh", "vault-system",$(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)]
             policies: ["allow_secrets", "allow_pki"]
             ttl: 10m
+  # Default values for vault-values
+  # This is a YAML-formatted file.
+  # Declare variables to be passed into your templates.
+
+  # The namespace where the operator watches for vault CRD objects, if not defined
+  # all namespaces are watched
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: "letsencrypt-staging"
+      # traefik.ingress.kubernetes.io/auth-type: basic
+      traefik.ingress.kubernetes.io/auth-secret: vault-auth
+      traefik.ingress.kubernetes.io/frontend-entry-points: "https"
+    hosts:
+      - host: vault.milantech.live
+        paths: [ "/*" ]
+    tls:
+      - secretName: vault-milantech-view-tls
+        hosts:
+          - vault.milantech.live
