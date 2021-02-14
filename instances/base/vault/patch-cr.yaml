@@ -43,6 +43,11 @@ spec:
                 backend:
                   serviceName: pbe-vault
                   servicePort: 8200
+      tls:
+      - hosts:
+        - vault.milantech.live
+        secretName: vault-milantech-view-tls
+
     # hosts:
     #   - host: vault.milantech.live
     #     paths: [ "/*" ]
