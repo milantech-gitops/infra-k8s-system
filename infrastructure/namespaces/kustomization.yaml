@@ -5,4 +5,5 @@ resources:
 - certmanager.yaml
 - kapp.yaml
 - kubeview.yaml
-# - traefik.yaml
+- metallb.yaml
+- traefik.yaml

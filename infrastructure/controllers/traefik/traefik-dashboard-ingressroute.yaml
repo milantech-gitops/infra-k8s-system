@@ -2,7 +2,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: traefik-dashboard
-  namespace: kube-system
+  namespace: traefik
 spec:
   entryPoints:
     - websecure
@@ -11,7 +11,7 @@ spec:
       kind: Rule
       middlewares:
         - name: traefik-dashboard-basicauth
-          namespace: kube-system
+          namespace: traefik
       services:
         - name: api@internal
           kind: TraefikService
