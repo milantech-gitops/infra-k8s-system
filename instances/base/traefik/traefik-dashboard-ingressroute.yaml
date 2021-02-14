@@ -10,7 +10,7 @@ spec:
     - match: Host(`traefik.milantech.live`)
       kind: Rule
       middlewares:
-        - name: traefik-dashboard-basicauth
+        - name: pbe-traefik-dashboard-basicauth
           namespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
       services:
         - name: api@internal
