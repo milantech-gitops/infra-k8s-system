@@ -19,7 +19,7 @@ spec:
   # Default values for vault-values
   # This is a YAML-formatted file.
   # Declare variables to be passed into your templates.
-  serviceType: NodePort
+  serviceType: LoadBalancer
 
   # service:
   #   name: vault-ui
