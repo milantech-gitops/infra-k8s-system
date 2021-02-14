@@ -6,8 +6,8 @@ resources:
   - metallb
   - controllers/vmware-tanzu
   - controllers/traefik
+  - controllers/power-dns
   - certs
   - kubeview
   - vault
-  - power-dns
   - external-dns
