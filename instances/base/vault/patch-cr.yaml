@@ -37,8 +37,8 @@ spec:
             paths:
               - path: /
                 backend:
-                  serviceName: vault
-                  servicePort: 8300
+                  serviceName: pbe-vault
+                  servicePort: 8200
     # hosts:
     #   - host: vault.milantech.live
     #     paths: [ "/*" ]
