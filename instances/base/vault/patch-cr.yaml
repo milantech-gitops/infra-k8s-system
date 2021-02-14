@@ -39,7 +39,7 @@ spec:
         - host: vault.milantech.live
           http:
             paths:
-              - path: /
+              - path: /*
                 backend:
                   serviceName: pbe-vault
                   servicePort: 8200
