@@ -4,8 +4,8 @@ namespace: traefik
 resources:
   - release.yaml
   - traefik-config.yaml
-  - traefik-dashboard-secret.yaml
-  - traefik-dashboard-ingressroute.yaml
+  # - traefik-dashboard-secret.yaml
+  # - traefik-dashboard-ingressroute.yaml
 
 configMapGenerator:
   - name: traefik-values
