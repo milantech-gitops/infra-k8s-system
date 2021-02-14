@@ -4,6 +4,10 @@ service:
   enabled: true
   type: LoadBalancer
   # Additional service labels (e.g. for filtering Service by custom labels)
+  spec:
+    externalTrafficPolicy: Local
+    # loadBalancerIP: "1.2.3.4"
+    # clusterIP: "2.3.4.5"
 # Whether Role Based Access Control objects like roles and rolebindings should be created
 rbac:
   enabled: true
