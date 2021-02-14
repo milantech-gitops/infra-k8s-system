@@ -21,16 +21,15 @@ spec:
   # Declare variables to be passed into your templates.
   serviceType: NodePort
 
-  service:
-    name: vault-ui
-    type: ClusterIP
-    port: 8200
-    targetPort: 8200
+  # service:
+  #   name: vault-ui
+  #   type: ClusterIP
+  #   port: 8200
+  #   targetPort: 8200
 
   # The namespace where the operator watches for vault CRD objects, if not defined
   # all namespaces are watched
   ingress:
-    enabled: false
     annotations:
       kubernetes.io/ingress.class: traefik
       kubernetes.io/ingress.allow-https: "true"
