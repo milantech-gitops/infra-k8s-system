@@ -2,7 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault-system
 namePrefix: pbe-
-
+generatorOptions:
+  disableNameSuffixHash: true
 resources:
   # - namespace.yaml
   - rbac.yaml
@@ -10,6 +11,3 @@ resources:
 
 patchesStrategicMerge:
   - patch-cr.yaml
-
-generatorOptions:
-  disableNameSuffixHash: true

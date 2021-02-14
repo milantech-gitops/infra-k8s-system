@@ -29,7 +29,6 @@ spec:
       # traefik.ingress.kubernetes.io/auth-type: basic
       cert-manager.io/cluster-issuer: "letsencrypt-staging"
       traefik.ingress.kubernetes.io/auth-secret: pbe-vault-tls
-      traefik.ingress.kubernetes.io/frontend-entry-points: "https"
       traefik.ingress.kubernetes.io/force-ssl-redirect: "true"
       traefik.ingress.kubernetes.io/ssl-passthrough: "true"
       traefik.ingress.kubernetes.io/backend-protocol: "HTTPS"
@@ -47,7 +46,7 @@ spec:
       tls:
       - hosts:
         - vault.milantech.live
-        secretName: vault-milantech-view-tls
+        secretName: pbe-vault-tls
 
     # hosts:
     #   - host: vault.milantech.live
