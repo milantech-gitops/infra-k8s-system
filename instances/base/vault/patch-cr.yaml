@@ -23,17 +23,26 @@ spec:
   # The namespace where the operator watches for vault CRD objects, if not defined
   # all namespaces are watched
   ingress:
-    enabled: true
     annotations:
       kubernetes.io/ingress.class: traefik
       cert-manager.io/cluster-issuer: "letsencrypt-staging"
       # traefik.ingress.kubernetes.io/auth-type: basic
       traefik.ingress.kubernetes.io/auth-secret: vault-auth
       traefik.ingress.kubernetes.io/frontend-entry-points: "https"
-    hosts:
-      - host: vault.milantech.live
-        paths: [ "/*" ]
-    tls:
-      - secretName: vault-milantech-view-tls
-        hosts:
-          - vault.milantech.live
+
+    spec:
+      rules:
+        - host: vault.milantech.live
+          http:
+            paths:
+              - path: /
+                backend:
+                  serviceName: vault
+                  servicePort: 8300
+    # hosts:
+    #   - host: vault.milantech.live
+    #     paths: [ "/*" ]
+    # tls:
+    #   - secretName: vault-milantech-view-tls
+    #     hosts:
+    #       - vault.milantech.live
