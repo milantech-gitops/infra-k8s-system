@@ -4,8 +4,8 @@ service:
   enabled: true
   type: LoadBalancer
   # Additional service labels (e.g. for filtering Service by custom labels)
-  spec:
-    externalTrafficPolicy: Local
+  # spec:
+  #   externalTrafficPolicy: Local
     # loadBalancerIP: "1.2.3.4"
     # clusterIP: "2.3.4.5"
 # Whether Role Based Access Control objects like roles and rolebindings should be created
@@ -60,3 +60,17 @@ volumes:
 pilot:
   enabled: true
   token: "ec4d679a-6126-43bb-9f91-2a3959940418"
+
+ssl:
+  enabled: "true"
+  mtls:
+    optional: "true"
+  generateTLS: "true"
+
+kubernetes:
+  ingressEndpoint:
+    publishedService: "traefik/traefik"
+
+metrics:
+  prometheus:
+    enabled: "true"
