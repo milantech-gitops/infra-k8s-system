@@ -5,6 +5,7 @@ namespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
 resources:
 - namespace.yaml
 - ../../../base/traefik
+- ../../../base/certs
 - ../../../base/vault
 transformers:
 - labels.yaml
