@@ -1,0 +1,31 @@
+---
+# AWS Route53
+provider: pdns
+pdns:
+  apiUrl: "http://powerdns-service-api.external-dns.svc.milantech.live"
+  apiPort: 8081
+  apiKey: "APIKEY"
+txtOwnerId: external-dns
+domainFilters:
+  - "milantech.live"
+logLevel: "info"
+interval: "10s"
+rbac:
+  create: "true"
+
+
+# AWS Route53
+# aws:
+#   zoneType: public
+# interval: 3m
+# policy: upsert-only
+# provider: aws
+# rbac:
+#   create: true
+#   serviceAccountAnnotations:
+#     eks:
+#       amazonaws:
+#         com/role-arn: arn:aws:iam::644712362974:role/pbe-slodev-externaldns-iam-cluster-role
+#   serviceAccountName: external-dns
+# registry: txt
+# txtOwnerId: Z0829272W6OOLE70Z75A

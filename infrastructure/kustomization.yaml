@@ -9,3 +9,5 @@ resources:
   - certs
   - kubeview
   - vault
+  - power-dns
+  - external-dns

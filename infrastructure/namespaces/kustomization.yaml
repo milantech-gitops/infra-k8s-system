@@ -7,3 +7,5 @@ resources:
 - kubeview.yaml
 - metallb.yaml
 - traefik.yaml
+- powerdns.yaml
+- externaldns.yaml
