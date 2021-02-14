@@ -7,7 +7,7 @@ resources:
   - controllers/vmware-tanzu
   - controllers/traefik
   - controllers/power-dns
+  - controllers/external-dns
   - certs
   - kubeview
   - vault
-  - external-dns
