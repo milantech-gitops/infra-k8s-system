@@ -155,6 +155,60 @@ metadata:
 ---
 apiVersion: v1
 data:
+  values.yaml: |
+    ---
+    # Default values for kubeview-values
+    # This is a YAML-formatted file.
+    # Declare variables to be passed into your templates.
+
+    # The namespace where the operator watches for vault CRD objects, if not defined
+    # all namespaces are watched
+
+
+    ## configInline specifies MetalLB's configuration directly, in yaml
+    ## format. When configInline is used, Helm manages MetalLB's
+    ## configuration ConfigMap as part of the release, and
+    ## existingConfigMap is ignored.
+    ## Refer to https://metallb.universe.tf/configuration/ for
+    ## available options.
+    #
+    configInline:
+    #BGP config
+      # peers:
+      # - peer-address: 10.0.0.1
+      #   peer-asn: 64512
+      #   my-asn: 64512
+      # address-pools:
+      # - name: default
+      #   protocol: bgp
+      #   addresses:
+      #   - 198.51.100.0/24
+      address-pools:
+      - name: default
+        protocol: layer2
+        addresses:
+        - 172.30.0.150-172.30.0.200
+
+    ## RBAC creation for controller and speaker
+    ##
+    rbac:
+      ## create specifies whether to install and use RBAC rules.
+      ##
+      create: true
+
+    ## PSP creation for controller and speaker
+    ##
+    psp:
+      ## create specifies whether to install Pod Security Policies.
+      ##
+      create: true
+kind: ConfigMap
+metadata:
+  name: metallb-config-values-59k87bc8mk
+  namespace: metallb-system
+---
+apiVersion: v1
+data:
   traefik-config.yaml: |
     http:
       middlewares:
@@ -331,15 +385,6 @@ stringData:
   email: jtmilan@gmail.com
 type: Opaque
 ---
-apiVersion: v1
-data:
-  users: |
-    c3RhZ2luZzokYXByMSR0bnhrbGsyNSQ1THR1MDQuTTFPby9IZndmM2R3TW8xCgo=
-kind: Secret
-metadata:
-  name: traefik-dashboard-auth
-  namespace: traefik
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -391,38 +436,6 @@ spec:
           medium: Memory
         name: template-fs
 ---
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-prod
-  namespace: certmanager
-spec:
-  acme:
-    email: production@milantech.live
-    privateKeySecretRef:
-      name: letsencrypt-prod
-    server: https://acme-v02.api.letsencrypt.org/directory
-    solvers:
-    - http01:
-        ingress:
-          class: nginx
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-staging
-  namespace: certmanager
-spec:
-  acme:
-    email: staging@milantech.live
-    privateKeySecretRef:
-      name: letsencrypt-staging
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    solvers:
-    - http01:
-        ingress:
-          class: nginx
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -472,6 +485,31 @@ spec:
   valuesFrom:
   - kind: ConfigMap
     name: kubeview-config-values-g6m46t6cck
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: metallb
+  namespace: metallb-system
+spec:
+  chart:
+    spec:
+      chart: metallb
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: infra-system
+      version: ^0.9.5
+  install:
+    remediation:
+      retries: 3
+  interval: 1m0s
+  releaseName: metallb
+  values:
+    replicaCount: 1
+  valuesFrom:
+  - kind: ConfigMap
+    name: operator-values
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -592,30 +630,3 @@ metadata:
 spec:
   interval: 30m
   url: https://helm.traefik.io/traefik
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: traefik-dashboard
-  namespace: traefik
-spec:
-  entryPoints:
-  - websecure
-  routes:
-  - kind: Rule
-    match: Host(`traefik.milantech.live`)
-    middlewares:
-    - name: traefik-dashboard-basicauth
-      namespace: traefik
-    services:
-    - kind: TraefikService
-      name: api@internal
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: traefik-dashboard-basicauth
-  namespace: traefik
-spec:
-  basicAuth:
-    secret: traefik-dashboard-auth
