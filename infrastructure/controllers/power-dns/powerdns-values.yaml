@@ -1,3 +1,123 @@
 ---
 # POWER DNS
-domain: milantech.live
+#Author: aescanero@disasterproject.com
+#Website: www.disasterproject.com
+#Version: 0.3
+
+enabled: true
+service:
+  dns:
+    tcp:
+      enabled: false
+      type: LoadBalancer
+      port: 53
+      annotations:
+    udp:
+      enabled: true
+      type: LoadBalancer
+      port: 53
+      annotations:
+  api:
+    type: ClusterIP
+    port: 8081
+image:
+  repository: pschiffe/pdns-mysql
+  tag: alpine
+  pullPolicy: IfNotPresent
+domain: milantech.local
+master: "yes"
+api: "yes"
+version_string: "anonymous"
+default_ttl: "1500"
+soa_minimum_ttl: "1200"
+default_soa_name: "ns1.milantech.local"
+apikey: foobarbaz
+
+metallb:
+  address_pool: default
+
+powerdns:
+  enabled: true
+  image:
+    repository: pschiffe/pdns-mysql
+    tag: alpine
+    pullPolicy: IfNotPresent
+  domain: milantech.local
+  master: "yes"
+  api: "yes"
+  webserver: "yes"
+  webserver_address: "0.0.0.0"
+  webserver_allow_from: "0.0.0.0/0"
+  version_string: "anonymous"
+  default_ttl: "1500"
+  soa_minimum_ttl: "1200"
+  default_soa_name: "ns1.milantech.local"
+  mysql_host: "127.0.0.1"
+  mysql_database: "powerdns"
+  mysql_user: "powerdns"
+  innodb_read_committed: "no"
+  requests:
+    memory: "512Mi"
+    cpu: "300m"
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
+
+mariadb:
+  enabled: true
+  image:
+    repository: mariadb
+    tag: latest
+    pullPolicy: IfNotPresent
+  persistence:
+    enabled: false
+    accessMode: 'ReadWriteOnce'
+    size: '1Gi'
+  args: 
+    - --bind-address=0.0.0.0
+    - --innodb_use_native_aio=0
+    - --innodb_flush_method=fsync
+  requests:
+    memory: "512Mi"
+    cpu: "300m"
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
+  mysql_pass: changeme
+
+admin:
+  enabled: true
+  service:
+    type: LoadBalancer
+    port: 9191
+  image:
+    repository: aescanero/powerdns-admin
+    tag: latest
+    pullPolicy: IfNotPresent
+  proto: "http"
+  powerdns_host: "127.0.0.1"
+  powerdns_port: "8081"
+  mysql_host: powerdns-db
+  mysql_database: "powerdns"
+  mysql_user: "powerdns"
+  ingress:
+    enabled: "false"
+    class: "traefik"
+    path: "/"
+    hostname: "powerdns-admin"
+  requests:
+    memory: "512Mi"
+    cpu: "300m"
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
+  secret: changeme
+
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
