@@ -2,6 +2,12 @@ varReference:
 #Controllers
 - path: spec/serviceAccountName
   kind: App
+- path: metadata/namespace
+  kind: Secret
+- path: metadata/namespace
+  kind: Middleware
+- path: metadata/namespace
+  kind: IngressRoute
 #Vault App
 - path: metadata/namespace
   kind: Vault
