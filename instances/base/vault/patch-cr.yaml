@@ -34,6 +34,7 @@ spec:
       traefik.ingress.kubernetes.io/ssl-passthrough: "true"
       traefik.ingress.kubernetes.io/backend-protocol: "HTTPS"
       traefik.ingress.kubernetes.io/whitelist-source-range: "127.0.0.1"
+      traefik.ingress.kubernetes.io/healthcheck-path: /v1/sys/health?standbyok=true&perfstandbyok=true
     spec:
       rules:
         - host: vault.milantech.live
