@@ -1,0 +1,46 @@
+---
+# Default values for kubeview-values
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The namespace where the operator watches for vault CRD objects, if not defined
+# all namespaces are watched
+
+
+## configInline specifies MetalLB's configuration directly, in yaml
+## format. When configInline is used, Helm manages MetalLB's
+## configuration ConfigMap as part of the release, and
+## existingConfigMap is ignored.
+## Refer to https://metallb.universe.tf/configuration/ for
+## available options.
+#
+configInline:
+#BGP config
+  # peers:
+  # - peer-address: 10.0.0.1
+  #   peer-asn: 64512
+  #   my-asn: 64512
+  # address-pools:
+  # - name: default
+  #   protocol: bgp
+  #   addresses:
+  #   - 198.51.100.0/24
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 172.30.0.150-172.30.0.200
+
+## RBAC creation for controller and speaker
+##
+rbac:
+  ## create specifies whether to install and use RBAC rules.
+  ##
+  create: true
+
+## PSP creation for controller and speaker
+##
+psp:
+  ## create specifies whether to install Pod Security Policies.
+  ##
+  create: true

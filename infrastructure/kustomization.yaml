@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespaces
   - sources
+  - metallb
   - controllers/vmware-tanzu
   - controllers/traefik
   - certs
