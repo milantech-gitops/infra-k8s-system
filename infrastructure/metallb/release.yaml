@@ -19,6 +19,6 @@ spec:
       retries: 3
   valuesFrom:
     - kind: ConfigMap
-      name: operator-values
+      name: metallb-config-values
   values:
     replicaCount: 1
