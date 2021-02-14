@@ -8,6 +8,8 @@ varReference:
   kind: Middleware
 - path: metadata/namespace
   kind: IngressRoute
+- path: spec/routes/middlewares/namespace
+  kind: IngressRoute
 #Vault App
 - path: metadata/namespace
   kind: Vault
