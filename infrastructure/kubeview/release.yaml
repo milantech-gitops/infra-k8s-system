@@ -21,18 +21,3 @@ spec:
       name: kubeview-config-values
   values:
     replicaCount: 1
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
-        traefik.ingress.kubernetes.io/auth-type: basic
-        traefik.ingress.kubernetes.io/auth-secret: kubeview-auth
-        traefik.ingress.kubernetes.io/frontend-entry-points: "https"
-      hosts:
-        - host: kubeview.milantech.live
-          paths: [ "/" ]
-      tls:
-        - secretName: kubeview-milantech-view-tls
-          hosts:
-            - kubeview.milantech.live
