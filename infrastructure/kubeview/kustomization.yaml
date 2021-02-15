@@ -4,13 +4,13 @@ namespace: kubeview
 resources:
   - release.yaml
 
-configMapGenerator:
-  - name: kubeview-config-values
-    files:
-      - values.yaml=kubeview-config.yaml
+# configMapGenerator:
+#   - name: kubeview-config-values
+#     files:
+#       - values.yaml=kubeview-config.yaml
 
-generatorOptions:
-  disableNameSuffixHash: true
+# generatorOptions:
+#   disableNameSuffixHash: true
 
-configurations:
-  - kustomizeconfig.yaml
+# configurations:
+#   - kustomizeconfig.yaml
