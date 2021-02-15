@@ -9,5 +9,8 @@ configMapGenerator:
     files:
       - values.yaml=kubeview-config.yaml
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configurations:
   - kustomizeconfig.yaml

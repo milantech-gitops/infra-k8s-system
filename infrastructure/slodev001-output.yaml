@@ -6,6 +6,11 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: external-dns
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: infra-system
 ---
 apiVersion: v1
@@ -17,6 +22,18 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: kubeview
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app: metallb
+  name: metallb-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: power-dns
 ---
 apiVersion: v1
 kind: Namespace
@@ -127,6 +144,45 @@ apiVersion: v1
 data:
   values.yaml: |-
     ---
+    # AWS Route53
+    provider: pdns
+    pdns:
+      apiUrl: "http://powerdns-service-api.external-dns.svc.milantech.live"
+      apiPort: 8081
+      apiKey: "APIKEY"
+    txtOwnerId: external-dns
+    domainFilters:
+      - "milantech.live"
+    logLevel: "info"
+    interval: "10s"
+    rbac:
+      create: "true"
+
+
+    # AWS Route53
+    # aws:
+    #   zoneType: public
+    # interval: 3m
+    # policy: upsert-only
+    # provider: aws
+    # rbac:
+    #   create: true
+    #   serviceAccountAnnotations:
+    #     eks:
+    #       amazonaws:
+    #         com/role-arn: arn:aws:iam::644712362974:role/pbe-slodev-externaldns-iam-cluster-role
+    #   serviceAccountName: external-dns
+    # registry: txt
+    # txtOwnerId: Z0829272W6OOLE70Z75A
+kind: ConfigMap
+metadata:
+  name: externaldns-values-7gd6fgbbb6
+  namespace: external-dns
+---
+apiVersion: v1
+data:
+  values.yaml: |-
+    ---
     # Default values for kubeview-values
     # This is a YAML-formatted file.
     # Declare variables to be passed into your templates.
@@ -155,7 +211,7 @@ metadata:
 ---
 apiVersion: v1
 data:
-  values.yaml: |
+  values.yaml: |-
     ---
     # Default values for kubeview-values
     # This is a YAML-formatted file.
@@ -204,8 +260,16 @@ data:
       create: true
 kind: ConfigMap
 metadata:
-  name: metallb-config-values-59k87bc8mk
+  name: metallb-config-values-kbkdf7cbfg
   namespace: metallb-system
+---
+apiVersion: v1
+data:
+  values.yaml: "---\n# POWER DNS\n#Author: aescanero@disasterproject.com\n#Website: www.disasterproject.com\n#Version: 0.3\n\nenabled: true\nservice:\n  dns:\n    tcp:\n      enabled: false\n      type: LoadBalancer\n      port: 53\n      annotations:\n    udp:\n      enabled: true\n      type: LoadBalancer\n      port: 53\n      annotations:\n  api:\n    type: ClusterIP\n    port: 8081\nimage:\n  repository: pschiffe/pdns-mysql\n  tag: alpine\n  pullPolicy: IfNotPresent\ndomain: milantech.local\nmaster: \"yes\"\napi: \"yes\"\nversion_string: \"anonymous\"\ndefault_ttl: \"1500\"\nsoa_minimum_ttl: \"1200\"\ndefault_soa_name: \"ns1.milantech.local\"\napikey: foobarbaz\n\nmetallb:\n  address_pool: default\n\npowerdns:\n  enabled: true\n  image:\n    repository: pschiffe/pdns-mysql\n    tag: alpine\n    pullPolicy: IfNotPresent\n  domain: milantech.local\n  master: \"yes\"\n  api: \"yes\"\n  webserver: \"yes\"\n  webserver_address: \"0.0.0.0\"\n  webserver_allow_from: \"0.0.0.0/0\"\n  version_string: \"anonymous\"\n  default_ttl: \"1500\"\n  soa_minimum_ttl: \"1200\"\n  default_soa_name: \"ns1.milantech.local\"\n  mysql_host: \"127.0.0.1\"\n  mysql_database: \"powerdns\"\n  mysql_user: \"powerdns\"\n  innodb_read_committed: \"no\"\n  requests:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n  limits:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n\nmariadb:\n  enabled: true\n  image:\n    repository: mariadb\n    tag: latest\n    pullPolicy: IfNotPresent\n  persistence:\n    enabled: false\n    accessMode: 'ReadWriteOnce'\n    size: '1Gi'\n  args: \n    - --bind-address=0.0.0.0\n    - --innodb_use_native_aio=0\n    - --innodb_flush_method=fsync\n  requests:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n  limits:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n  mysql_pass: changeme\n\nadmin:\n  enabled: true\n  service:\n    type: LoadBalancer\n    port: 9191\n  image:\n    repository: aescanero/powerdns-admin\n    tag: latest\n    pullPolicy: IfNotPresent\n  proto: \"http\"\n  powerdns_host: \"127.0.0.1\"\n  powerdns_port: \"8081\"\n  mysql_host: powerdns-db\n  mysql_database: \"powerdns\"\n  mysql_user: \"powerdns\"\n  ingress:\n    enabled: \"false\"\n    class: \"traefik\"\n    path: \"/\"\n    hostname: \"powerdns-admin\"\n  requests:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n  limits:\n    memory: \"512Mi\"\n    cpu: \"300m\"\n  secret: changeme\n\nnameOverride: \"\"\nfullnameOverride: \"\"\n\nnodeSelector: {}\n\ntolerations: []\n\naffinity: {}"
+kind: ConfigMap
+metadata:
+  name: powerdns-values-g9bdd77846
+  namespace: power-dns
 ---
 apiVersion: v1
 data:
@@ -229,13 +293,17 @@ metadata:
 ---
 apiVersion: v1
 data:
-  values.yaml: |-
+  values.yaml: |
     ---
     # Options for the main traefik service, where the entrypoints traffic comes from.
     service:
       enabled: true
       type: LoadBalancer
       # Additional service labels (e.g. for filtering Service by custom labels)
+      # spec:
+      #   externalTrafficPolicy: Local
+        # loadBalancerIP: "1.2.3.4"
+        # clusterIP: "2.3.4.5"
     # Whether Role Based Access Control objects like roles and rolebindings should be created
     rbac:
       enabled: true
@@ -248,6 +316,7 @@ data:
     # All available options available on https://docs.traefik.io/reference/static-configuration/cli/
     ## Use curly braces to pass values: `helm install --set="additionalArguments={--providers.kubernetesingress.ingressclass=traefik-internal,--log.level=DEBUG}"`
     additionalArguments:
+      - --providers.kubernetesingress.ingressclass=traefik-internal
       - --providers.file.filename=/data/traefik-config.yaml
       - --providers.kubernetesIngress=true
       - --entrypoints.websecure.http.tls.certresolver=cloudflare
@@ -288,9 +357,24 @@ data:
     pilot:
       enabled: true
       token: "ec4d679a-6126-43bb-9f91-2a3959940418"
+
+
+    # ssl:
+    #   enabled: "true"
+    #   mtls:
+    #     optional: "true"
+    #   generateTLS: "true"
+
+    # kubernetes:
+    #   ingressEndpoint:
+    #     publishedService: "traefik/traefik"
+
+    # metrics:
+    #   prometheus:
+    #     enabled: "true"
 kind: ConfigMap
 metadata:
-  name: traefik-values-c7mb6m5657
+  name: traefik-values-78kfhmgc67
   namespace: traefik
 ---
 apiVersion: v1
@@ -464,6 +548,31 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
+  name: external-dns
+  namespace: external-dns
+spec:
+  chart:
+    spec:
+      chart: external-dns
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: infra-system
+      version: '>4.0.0'
+  install:
+    remediation:
+      retries: 3
+  interval: 1m0s
+  releaseName: external-dns
+  values:
+    replicas: 1
+  valuesFrom:
+  - kind: ConfigMap
+    name: externaldns-values-7gd6fgbbb6
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
   name: kubeview
   namespace: kubeview
 spec:
@@ -499,7 +608,7 @@ spec:
         kind: HelmRepository
         name: bitnami
         namespace: infra-system
-      version: ^0.9.5
+      version: ^2.2.0
   install:
     remediation:
       retries: 3
@@ -509,7 +618,32 @@ spec:
     replicaCount: 1
   valuesFrom:
   - kind: ConfigMap
-    name: operator-values
+    name: metallb-config-values-kbkdf7cbfg
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: power-dns
+  namespace: power-dns
+spec:
+  chart:
+    spec:
+      chart: powerdns
+      sourceRef:
+        kind: HelmRepository
+        name: aecharts
+        namespace: infra-system
+      version: ^0.1.11
+  install:
+    remediation:
+      retries: 3
+  interval: 1m0s
+  releaseName: power-dns
+  values:
+    replicas: 1
+  valuesFrom:
+  - kind: ConfigMap
+    name: powerdns-values-g9bdd77846
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -534,7 +668,7 @@ spec:
     replicaCount: 1
   valuesFrom:
   - kind: ConfigMap
-    name: traefik-values-c7mb6m5657
+    name: traefik-values-78kfhmgc67
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -585,6 +719,15 @@ spec:
   valuesFrom:
   - kind: ConfigMap
     name: webhook-values-6bm4ck8gb9
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: aecharts
+  namespace: infra-system
+spec:
+  interval: 30m
+  url: https://raw.githubusercontent.com/aescanero/helm-charts/master/
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
