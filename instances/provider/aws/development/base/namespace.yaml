@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  # name: ${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=aws-stg-default}
-  name: default
-  labels:
-    environment: ${cluster_aws_account:=stg}
-    costcenter: ${cluster_cc:=aws}
