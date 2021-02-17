@@ -4,6 +4,7 @@ resources:
 - sources.yaml
 - certmanager.yaml
 - kubeview.yaml
+- vault.yaml
 # - kapp.yaml
 # - metallb.yaml
 # - traefik.yaml
