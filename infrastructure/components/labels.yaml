@@ -6,7 +6,7 @@ labels:
   app.kubernetes.io/name: pbe-components
   app.kubernetes.io/instance: infrastructure
   app.kubernetes.io/managed-by: infra-team
-  app.kubernetes.io/component: elasticsearch
+  app.kubernetes.io/component: infra
   app.kubernetes.io/part-of: pbe
   app.kubernetes.io/version: v0.0.1
 fieldSpecs:
