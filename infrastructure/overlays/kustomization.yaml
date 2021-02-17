@@ -4,7 +4,7 @@ resources:
 # Infra Stack
   # - stacks/infra
 # PBE Stack
-  # - stacks/pbe
+  - stacks/pbe
 
 transformers:
 - ../labels.yaml
