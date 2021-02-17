@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
 - infrastructure.yaml
-# - instances.yaml
+- instances.yaml
 
 # generatorOptions:
 #   disableNameSuffixHash: true
