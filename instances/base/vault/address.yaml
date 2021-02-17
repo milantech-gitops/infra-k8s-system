@@ -1,0 +1,4 @@
+
+- op: replace
+  path: /spec/config/cluster_addr
+  value: '"https://${.Env.POD_NAME}:8201"'

@@ -8,3 +8,19 @@ resources:
 
 patchesStrategicMerge:
   - patch-cr.yaml
+
+patches:
+- target:
+    group: vault.banzaicloud.com
+    version: v1alpha1
+    kind: Vault
+    name: pbe-vault
+  path: address.yaml
+
+# patches:
+# - target:
+#     kind: MutatingWebhookConfiguration
+#     version: v1beta1
+#     group: admissionregistration.k8s.io
+#     name: seldon-mutating-webhook-configuration-kubeflow
+#   path: patchport.yaml

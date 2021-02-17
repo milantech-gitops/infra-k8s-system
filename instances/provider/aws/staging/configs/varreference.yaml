@@ -23,6 +23,8 @@ varReference:
   kind: Vault
 - path: spec/unsealConfig/kubernetes/secretNamespace
   kind: Vault
+- path: spec/config/cluster_addr
+  kind: Vault
 #RBAC
 - path: metadata/name
   kind: ServiceAccount
