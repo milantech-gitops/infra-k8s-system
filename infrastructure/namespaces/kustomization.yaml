@@ -12,5 +12,5 @@ resources:
 # - externaldns.yaml
 
 
-transformers:
-- ../labels.yaml
+# transformers:
+# - ../labels.yaml
