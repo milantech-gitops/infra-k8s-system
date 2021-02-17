@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/cert-manager
+  path: ./infrastructure/components/cert-manager
   prune: true
   validation: client
   healthChecks:
