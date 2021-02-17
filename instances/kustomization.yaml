@@ -1,4 +1,34 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - provider/${cluster_cloud_provider:=aws}/${cluster_aws_account:=sandbox}
+  - provider/$(CLUSTER_CLOUD_PROVIDER)/$(CLUSTER_AWS_ACCOUNT)
+
+
+transformers:
+- labels.yaml
+
+configMapGenerator:
+- envs:
+  - vars/instances-config.env
+  name: instances-config-map
+
+configurations:
+- configs/varreference.yaml
+
+vars:
+#Cloud/Environment provider related parameters
+- fieldref:
+    fieldpath: data.cloud-provider
+  name: CLUSTER_CLOUD_PROVIDER
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: instances-config-map
+
+- fieldref:
+    fieldpath: data.environment-account
+  name: CLUSTER_AWS_ACCOUNT
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: instances-config-map
