@@ -51,6 +51,13 @@ vars:
     apiVersion: v1
     kind: ConfigMap
     name: app-config
+- fieldref:
+    fieldpath: data.vault_addr
+  name: VAULT_ADDR
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
 #Annotations
 - fieldref:
     fieldpath: data.cluster
