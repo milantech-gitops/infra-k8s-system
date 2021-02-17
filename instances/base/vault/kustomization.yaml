@@ -9,13 +9,13 @@ resources:
 patchesStrategicMerge:
   - patch-cr.yaml
 
-patches:
-- target:
-    group: vault.banzaicloud.com
-    version: v1alpha1
-    kind: Vault
-    name: pbe-vault
-  path: address.yaml
+# patches:
+# - target:
+#     group: vault.banzaicloud.com
+#     version: v1alpha1
+#     kind: Vault
+#     name: pbe-vault
+#   path: address.yaml
 
 # patches:
 # - target:
