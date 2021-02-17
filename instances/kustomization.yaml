@@ -38,23 +38,15 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
-    fieldpath: data.cluster_aws_account
-  name: CLUSTER_AWS_ACCOUNT
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: cluster-config-map
-
-- fieldref:
-    fieldpath: data.cost_center
+    fieldpath: data.cluster_cc
   name: CLUSTER_COST_CENTER
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.department
@@ -62,7 +54,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.region
@@ -70,7 +62,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.operating_system
@@ -78,7 +70,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.encryption
@@ -86,7 +78,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.security_application
@@ -94,7 +86,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: cluster-config-map
+    name: instances-config-map
 
 #Vault related parameters
 
@@ -104,7 +96,7 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: instance-config-map
+    name: instances-config-map
 
 - fieldref:
     fieldpath: data.vault_role
@@ -112,4 +104,4 @@ vars:
   objref:
     apiVersion: v1
     kind: ConfigMap
-    name: instance-config-map
+    name: instances-config-map
