@@ -10,7 +10,3 @@ resources:
 # - traefik.yaml
 # - powerdns.yaml
 # - externaldns.yaml
-
-
-# transformers:
-# - ../labels.yaml
