@@ -8,3 +8,6 @@ resources:
   - traefik.yaml
   - kubeview.yaml
   - aecharts.yaml
+
+transformers:
+- ../labels.yaml
