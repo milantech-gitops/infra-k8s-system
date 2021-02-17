@@ -1,4 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ${cluster_cc:=aws}-${cluster_aws_account:=sandbox}
+  - provider/${cluster_cc:=aws}/${cluster_aws_account:=sandbox}
