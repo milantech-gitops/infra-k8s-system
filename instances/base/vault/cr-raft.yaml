@@ -59,11 +59,7 @@ spec:
   # Please note that some Ingress controllers like https://github.com/kubernetes/ingress-gce
   # forces you to expose your Service on a NodePort
   serviceType: ClusterIP
-  service:
-    name: vault
-    type: ClusterIP
-    port: 8200
-    targetPort: 8200
+
     ## Force load balancer IP
     # loadBalancerIP: 1.2.3.4
     # annotations:
