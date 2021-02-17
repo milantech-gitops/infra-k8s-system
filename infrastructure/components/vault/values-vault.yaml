@@ -283,11 +283,11 @@ prometheusStatsdExporter:
 
 # Please see necessary changes to vault.config.listener.tcp above if enabled
 # Either issuerRef must be set to your Issuer or issuer must be enabled to generate a SelfSigned one
-# certManager:
-#   issuer:
-#     enabled: true
-#   certificate:
-#     enabled: true
-#     issuerRef:
-#     additionalDomains:
-#       - vault.milantech.live
+certManager:
+  issuer:
+    enabled: true
+  certificate:
+    enabled: true
+    issuerRef:
+    additionalDomains:
+      - vault.milantech.live
