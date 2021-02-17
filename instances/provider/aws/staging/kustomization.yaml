@@ -6,7 +6,7 @@ resources:
 - ../../../base/vault
 - ../../../base/certs
 - ../../../base/traefik
-#namePrefix: ${cluster_cc:=aws}-
+namePrefix: ${cluster_cc:=aws}-
 transformers:
 - labels.yaml
 
