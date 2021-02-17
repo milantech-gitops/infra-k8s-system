@@ -4,9 +4,9 @@ resources:
 - sources.yaml
 - certmanager.yaml
 - kubeview.yaml
+- metallb.yaml
 - vault.yaml
 # - kapp.yaml
-# - metallb.yaml
 # - traefik.yaml
 # - powerdns.yaml
 # - externaldns.yaml

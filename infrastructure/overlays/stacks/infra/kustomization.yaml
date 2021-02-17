@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - certmanager.yaml
 - kubeview.yaml
+- metallb.yaml
