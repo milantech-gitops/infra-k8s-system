@@ -123,7 +123,8 @@ spec:
       # This is true by default
       preFlightChecks: true
     kubernetes:
-      secretNamespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
+      # secretNamespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
+      secretNamespace: default
 
   # A YAML representation of a final vault config file.
   # See https://www.vaultproject.io/docs/configuration/ for more information.
