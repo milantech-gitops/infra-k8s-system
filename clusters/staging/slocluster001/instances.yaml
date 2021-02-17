@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./instances
+  path: ./instances/provider/$(CLUSTER_CLOUD_PROVIDER)/$(CLUSTER_AWS_ACCOUNT)
   prune: true
   validation: client
   postBuild:

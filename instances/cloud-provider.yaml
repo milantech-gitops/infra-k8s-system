@@ -1,0 +1,18 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: cloud-provider
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./instances/provider/$(CLUSTER_CLOUD_PROVIDER)/$(CLUSTER_AWS_ACCOUNT)
+  prune: true
+  validation: client
+  # postBuild:
+  #   substitute:
+  #     cluster_cloud_provider: '$(CLUSTER_CLOUD_PROVIDER)'
+  #     cluster_name: '$(CLUSTER_NAME)'
+  #     cluster_aws_account: '$(CLUSTER_AWS_ACCOUNT)'

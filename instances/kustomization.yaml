@@ -1,8 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - provider/$(CLUSTER_CLOUD_PROVIDER)/$(CLUSTER_AWS_ACCOUNT)
-
+bases:
+  - cloud-provider.yaml
 
 transformers:
 - labels.yaml

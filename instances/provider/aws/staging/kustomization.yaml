@@ -27,7 +27,7 @@ commonAnnotations:
 
 configMapGenerator:
 - envs:
-  - vars/aws-values.env
+  - vars/aws-staging-values.env
   name: app-config
 
 # These vars are used for substituing in the parameters from the config map
