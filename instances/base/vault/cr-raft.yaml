@@ -201,9 +201,3 @@ spec:
   vaultEnvsConfig:
     - name: VAULT_LOG_LEVEL
       value: debug
-
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          apiVersion: v1
-          fieldPath: metadata.name
