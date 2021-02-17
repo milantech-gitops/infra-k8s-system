@@ -7,5 +7,5 @@ resources:
   - traefik
   - kapp
 
-transformers:
-- ../../labels.yaml
+# transformers:
+# - ../../labels.yaml
