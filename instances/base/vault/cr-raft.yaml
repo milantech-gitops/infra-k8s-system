@@ -133,7 +133,7 @@ spec:
         tls_cert_file: /vault/tls/server.crt
         tls_key_file: /vault/tls/server.key
     api_addr: https://vault.$(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster):8200
-    cluster_addr: "0.0.0.0:8201"
+    cluster_addr: https://$(VAULT_K8S_POD_NAME:):8201
     ui: true
 
   statsdDisabled: true
