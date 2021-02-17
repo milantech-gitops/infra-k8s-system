@@ -1,0 +1,112 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=default}
+resources:
+- namespace.yaml
+- ../../../base/vault
+- ../../../base/certs
+- ../../../base/traefik
+namePrefix: ${cluster_cc:=aws}-
+transformers:
+- labels.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonAnnotations:
+  app.kubernetes.io/version: v0.0.1
+  catalog.pbe.io/cluster: $(AnnotationsCluster)
+  catalog.pbe.io/cost-center: $(AnnotationsCostCenter)
+  catalog.pbe.io/department: $(AnnotationsDepartment)
+  catalog.pbe.io/encryption: $(AnnotationsEncryption)
+  catalog.pbe.io/environment: $(AnnotationsEnv)
+  catalog.pbe.io/heritage: pbe.io/catalog/sandbox
+  catalog.pbe.io/operating-system: $(AnnotationsOS)
+  catalog.pbe.io/owner: "Infra Team"
+  catalog.pbe.io/region: $(AnnotationsRegion)
+  catalog.pbe.io/security-application: $(AnnotationsSecurityApplication)
+  catalog.pbe.io/variant: base
+
+configMapGenerator:
+- envs:
+  - vars/aws-values.env
+  name: app-config
+
+# These vars are used for substituing in the parameters from the config map
+# into the Profiles custom resource.
+configurations:
+- configs/varreference.yaml
+- configs/namereference.yaml
+vars:
+#Vault related parameters
+- fieldref:
+    fieldpath: data.vault-sa
+  name: AppServiceAccountName
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.vault-role
+  name: AppServiceAccountRole
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+#Annotations
+- fieldref:
+    fieldpath: data.cluster
+  name: AnnotationsCluster
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.cost-center
+  name: AnnotationsCostCenter
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.department
+  name: AnnotationsDepartment
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.environment
+  name: AnnotationsEnv
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.region
+  name: AnnotationsRegion
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.operating-system
+  name: AnnotationsOS
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.encryption
+  name: AnnotationsEncryption
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config
+- fieldref:
+    fieldpath: data.security-application
+  name: AnnotationsSecurityApplication
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: app-config

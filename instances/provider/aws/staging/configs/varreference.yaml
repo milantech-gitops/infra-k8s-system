@@ -23,7 +23,7 @@ varReference:
   kind: Vault
 - path: spec/unsealConfig/kubernetes/secretNamespace
   kind: Vault
-#Annotations
+#RBAC
 - path: metadata/name
   kind: ServiceAccount
 - path: metadata/name
@@ -35,6 +35,8 @@ varReference:
 - path: subjects/namespace
   kind: RoleBinding
 - path: subjects/namespace
+  kind: ClusterRoleBinding
+- path: metadata/name
   kind: ClusterRoleBinding
 #Namespace
 - path: metadata/name

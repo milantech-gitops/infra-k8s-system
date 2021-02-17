@@ -1,4 +1,0 @@
-varReference:
-#Clusters
-- path: spec/path
-  kind: Kustomization

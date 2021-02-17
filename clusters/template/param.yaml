@@ -1,4 +1,0 @@
-varReference:
-#Instances
-- path: spec/path
-  kind: Kustomization
