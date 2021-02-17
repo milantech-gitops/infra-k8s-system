@@ -1,3 +1,27 @@
 varReference:
+# Clusters
 - path: spec/path
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_cloud_provider
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_name
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_aws_account
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_cc
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_dept
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_encrypt
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_os
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_region
+  kind: Kustomization
+- path: spec/postBuild/substitute/cluster_secapp
+  kind: Kustomization
+# Vault
+- path: spec/postBuild/substitute/vault_role
+  kind: Kustomization
+- path: spec/postBuild/substitute/vault_sa
   kind: Kustomization
