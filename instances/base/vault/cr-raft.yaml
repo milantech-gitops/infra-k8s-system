@@ -137,7 +137,7 @@ spec:
         tls_cert_file: /vault/tls/server.crt
         tls_key_file: /vault/tls/server.key
     api_addr: https://pbe-vault.$(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster):8200
-    cluster_addr: "https://${POD_NAME:={.Env.POD_NAME}}:8201"
+    cluster_addr: "https://${POD_NAME:='/${.Env.POD_NAME/}'}:8201"
     ui: true
 
   statsdDisabled: true
