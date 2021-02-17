@@ -7,12 +7,6 @@ spec:
   # See: https://banzaicloud.com/docs/bank-vaults/cli-tool/#example-external-vault-configuration
   # The repository also contains a lot examples in the deploy/ and operator/deploy directories.
   externalConfig:
-    policies:
-      - name: allow_secrets
-        rules: path "secret/*" {
-          capabilities = ["create", "read", "update", "delete", "list"]
-          }
-
     auth:
       - type: kubernetes
         roles:
@@ -25,39 +19,7 @@ spec:
   # Default values for vault-values
   # This is a YAML-formatted file.
   # Declare variables to be passed into your templates.
-
-    secrets:
-      - path: secret
-        type: kv
-        description: General secrets.
-        options:
-          version: 2
-
-    # Allows writing some secrets to Vault (useful for development purposes).
-    # See https://www.vaultproject.io/docs/secrets/kv/index.html for more information.
-
-    startupSecrets:
-      - type: kv
-        path: secret/data/accounts/aws
-        data:
-          data:
-            AWS_ACCESS_KEY_ID: secretId
-            AWS_SECRET_ACCESS_KEY: s3cr3t
-      - type: kv
-        path: secret/data/dockerrepo
-        data:
-          data:
-            DOCKER_REPO_USER: dockerrepouser
-            DOCKER_REPO_PASSWORD: dockerrepopassword
-      - type: kv
-        path: secret/data/mysql
-        data:
-          data:
-            MYSQL_ROOT_PASSWORD: s3cr3t
-            MYSQL_PASSWORD: 3xtr3ms3cr3t
-
-  serviceType: LoadBalancer
-
+  # serviceType:
   # service:
   #   name: vault-ui
   #   type: ClusterIP
@@ -99,10 +61,3 @@ spec:
     #   - secretName: vault-milantech-view-tls
     #     hosts:
     #       - vault.milantech.live
-
-  # See: https://banzaicloud.com/docs/bank-vaults/cli-tool/#example-external-vault-configuration
-  # The repository also contains a lot examples in the deploy/ and operator/deploy directories.
-
-  vaultEnvsConfig:
-    - name: VAULT_LOG_LEVEL
-      value: debug
