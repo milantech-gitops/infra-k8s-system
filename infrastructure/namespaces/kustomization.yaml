@@ -3,9 +3,9 @@ kind: Kustomization
 resources:
 - sources.yaml
 - certmanager.yaml
-- kapp.yaml
-- kubeview.yaml
-- metallb.yaml
-- traefik.yaml
-- powerdns.yaml
-- externaldns.yaml
+# - kapp.yaml
+# - kubeview.yaml
+# - metallb.yaml
+# - traefik.yaml
+# - powerdns.yaml
+# - externaldns.yaml

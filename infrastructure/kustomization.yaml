@@ -17,3 +17,4 @@ kind: Kustomization
 
 resources:
   - certs.yaml
+  - sources
