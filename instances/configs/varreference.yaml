@@ -2,6 +2,8 @@ varReference:
 # Clusters
 - path: spec/path
   kind: Kustomization
+- path: metadata/name
+  kind: Kustomization
 - path: spec/postBuild/substitute/cluster_cloud_provider
   kind: Kustomization
 - path: spec/postBuild/substitute/cluster_name
