@@ -1,7 +1,0 @@
-varReference:
-- path: metadata/name
-  kind: Namespace
-- path: spec/chart/spec/sourceRef/namespace
-  kind: HelmRelease
-- path: namespace
-  kind: Kustomize
