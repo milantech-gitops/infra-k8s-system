@@ -1,0 +1,9 @@
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: labels
+labels:
+  cluster: ${cluster_cc:=aws}-${cluster_aws_account:=sandbox}-${cluster_name:=default}
+fieldSpecs:
+  - path: metadata/labels
+    create: true

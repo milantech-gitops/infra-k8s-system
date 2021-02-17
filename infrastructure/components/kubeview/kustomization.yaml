@@ -13,4 +13,4 @@ configurations:
   - kustomizeconfig.yaml
 
 transformers:
-  - ../../labels.yaml
+  - ../labels.yaml
