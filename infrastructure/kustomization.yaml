@@ -12,10 +12,11 @@ kind: Kustomization
 #   # - controllers/power-dns
 #   # - controllers/external-dns
 
-# transformers:
-# - labels.yaml
-
 resources:
+  - base
   - namespaces
-  - certs.yaml
   - sources
+
+transformers:
+- labels.yaml
+
