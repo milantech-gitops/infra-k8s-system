@@ -12,7 +12,7 @@ spec:
         roles:
           # Allow every pod in the default namespace to use the secret kv store
           - name: default
-            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system",$(AppServiceAccountName)]
+            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system",pbe-$(AppServiceAccountName)]
             bound_service_account_namespaces: ["default", "vswh", "vault-system",$(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)]
             policies: ["allow_secrets", "allow_pki"]
             ttl: 10m
