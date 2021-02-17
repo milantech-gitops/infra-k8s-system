@@ -9,6 +9,8 @@ resources:
 patchesStrategicMerge:
   - patch-cr.yaml
 
+
+
 # patches:
 # - target:
 #     group: vault.banzaicloud.com
