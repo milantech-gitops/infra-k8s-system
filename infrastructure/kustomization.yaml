@@ -16,5 +16,6 @@ kind: Kustomization
 # - labels.yaml
 
 resources:
+  - namespaces
   - certs.yaml
   - sources
