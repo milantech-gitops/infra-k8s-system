@@ -11,7 +11,7 @@ spec:
       kind: Rule
       middlewares:
         - name: pbe-traefik-dashboard-basicauth
-          namespace: $(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster)
+          namespace: traefik-system
       services:
         - name: api@internal
           kind: TraefikService
