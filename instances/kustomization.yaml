@@ -6,102 +6,102 @@ bases:
 transformers:
 - labels.yaml
 
-configMapGenerator:
-- envs:
-  - vars/instances-config.env
-  name: instances-config-map
+# configMapGenerator:
+# - envs:
+#   - vars/instances-config.env
+#   name: instances-config-map
 
-configurations:
-- configs/varreference.yaml
+# configurations:
+# - configs/varreference.yaml
 
-vars:
-#Cloud/Environment provider related parameters
-- fieldref:
-    fieldpath: data.cluster_cloud_provider
-  name: CLUSTER_CLOUD_PROVIDER
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# vars:
+# #Cloud/Environment provider related parameters
+# - fieldref:
+#     fieldpath: data.cluster_cloud_provider
+#   name: CLUSTER_CLOUD_PROVIDER
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.cluster_aws_account
-  name: CLUSTER_AWS_ACCOUNT
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.cluster_aws_account
+#   name: CLUSTER_AWS_ACCOUNT
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.cluster_name
-  name: CLUSTER_NAME
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.cluster_name
+#   name: CLUSTER_NAME
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.cluster_cc
-  name: CLUSTER_COST_CENTER
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.cluster_cc
+#   name: CLUSTER_COST_CENTER
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.department
-  name: CLUSTER_DEPARTMENT
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.department
+#   name: CLUSTER_DEPARTMENT
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.region
-  name: CLUSTER_REGION
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.region
+#   name: CLUSTER_REGION
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.operating_system
-  name: CLUSTER_OS
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.operating_system
+#   name: CLUSTER_OS
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.encryption
-  name: CLUSTER_ENCRYPTION
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.encryption
+#   name: CLUSTER_ENCRYPTION
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.security_application
-  name: CLUSTER_SEC_APP
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.security_application
+#   name: CLUSTER_SEC_APP
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-#Vault related parameters
+# #Vault related parameters
 
-- fieldref:
-    fieldpath: data.vault_sa
-  name: VAULT_SA
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.vault_sa
+#   name: VAULT_SA
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
 
-- fieldref:
-    fieldpath: data.vault_role
-  name: VAULT_ROLE
-  objref:
-    apiVersion: v1
-    kind: ConfigMap
-    name: instances-config-map
+# - fieldref:
+#     fieldpath: data.vault_role
+#   name: VAULT_ROLE
+#   objref:
+#     apiVersion: v1
+#     kind: ConfigMap
+#     name: instances-config-map
