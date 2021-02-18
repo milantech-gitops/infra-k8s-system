@@ -4,6 +4,9 @@ namespace: kubeview
 resources:
   - release.yaml
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 configMapGenerator:
   - name: kubeview-config-values
     files:
@@ -12,5 +15,5 @@ configMapGenerator:
 configurations:
   - kustomizeconfig.yaml
 
-transformers:
-  - ../labels.yaml
+# transformers:
+#   - ../labels.yaml

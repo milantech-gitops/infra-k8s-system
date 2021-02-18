@@ -11,3 +11,7 @@ nameReference:
   fieldSpecs:
   - path: spec/valuesFrom/name
     kind: HelmRelease
+  - path: spec/tls/hosts
+    pattern: (secret/)?name
+    group: networking.k8s.io
+    version: v1
