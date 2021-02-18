@@ -7,3 +7,6 @@ resources:
 
 configurations:
   - kustomizeconfig.yaml
+
+# patchesStrategicMerge:
+#   - patch-cr.yaml

@@ -38,8 +38,6 @@ commonAnnotations:
   catalog.pbe.io/security-application: ${cluster_secapp:=na}
   catalog.pbe.io/variant: ${cluster_cloud_provider:=aws}/${cluster_aws_account:=staging}
 
-configurations:
-- configs/namereference.yaml
 
 # configMapGenerator:
 # - envs:

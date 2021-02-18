@@ -11,8 +11,11 @@ nameReference:
   fieldSpecs:
   - path: spec/basicAuth/secret
     kind: Middleware
-- kind: Secret
-  version: v1
+
+- kind: Middleware
+  group: traefik.containo.us
+  version: v1alpha1
   fieldSpecs:
-  - path: spec/routes/routes/middlewares/name
+  - path: spec/routes/middlewares
+    pattern: (namespace/)?name
     kind: IngressRoute
