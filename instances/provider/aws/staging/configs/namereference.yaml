@@ -1,9 +1,0 @@
-nameReference:
-# Configure named references to Secret objects to be updated by Transformers and Generators - e.g. namePrefix, secretGenerator, etc
-- kind: Secret
-  version: v1
-  fieldSpecs:
-  # v1.Pods that reference a Secret in spec.volumes.secret.secretName will have it updated
-  - path: spec/basicAuth/secret
-    version: traefik.containo.us/v1alpha1
-    kind: Middleware

@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=cluster001}
+resources:
+- namespace.yaml
+- ../../../base
+namePrefix: ${cluster_cc:=aws}-
+transformers:
+- labels.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonAnnotations:
+  app.kubernetes.io/version: v0.0.1
+  catalog.pbe.io/cluster: ${cluster_name:=default}
+  catalog.pbe.io/cost-center: ${cluster_cc:=infra}
+  catalog.pbe.io/department: ${cluster_dept:=Engineering}
+  catalog.pbe.io/encryption: ${cluster_encrypt:=encrypted}
+  catalog.pbe.io/environment: ${cluster_aws_account:=staging}
+  catalog.pbe.io/cloud-provider: ${cluster_cloud_provider:=aws}
+  catalog.pbe.io/heritage: pbe.io/catalog/staging
+  catalog.pbe.io/operating-system: ${cluster_os:=os}
+  catalog.pbe.io/owner: "Infra Team"
+  catalog.pbe.io/region: ${cluster_region:=us-east-1}
+  catalog.pbe.io/security-application: ${cluster_secapp:=na}
+  catalog.pbe.io/variant: ${cluster_cloud_provider:=aws}/${cluster_aws_account:=staging}

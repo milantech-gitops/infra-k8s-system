@@ -6,6 +6,10 @@ bases:
 transformers:
 - labels.yaml
 
+
+
+### Reserved for Configmaps ####
+################################
 # configMapGenerator:
 # - envs:
 #   - vars/instances-config.env

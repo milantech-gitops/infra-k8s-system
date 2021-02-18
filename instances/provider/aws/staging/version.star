@@ -1,3 +1,2 @@
-# Staging
+#Infra
 version = "v0.0.1"
-environment = "stg"
