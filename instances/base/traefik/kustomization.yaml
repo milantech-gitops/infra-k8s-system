@@ -4,3 +4,6 @@ namespace: traefik-system
 resources:
 - traefik-dashboard-ingressroute.yaml
 - traefik-dashboard-secret.yaml
+
+configurations:
+  - kustomizeconfig.yaml
