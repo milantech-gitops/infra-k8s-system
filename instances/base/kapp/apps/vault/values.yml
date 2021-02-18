@@ -1,7 +1,0 @@
-#@data/values
----
-replicas: 3
-app_name: "vault"
-app_namespace: ""
-certificate_arn: 
-role_arn: ""

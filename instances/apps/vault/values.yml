@@ -1,0 +1,7 @@
+#@data/values
+---
+replicas: 3
+app_name: "vault"
+app_namespace: "${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=cluster001}"
+certificate_arn: ""
+role_arn: ""

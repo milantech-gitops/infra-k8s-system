@@ -10,18 +10,16 @@ spec:
 
   fetch:
   - git:
-      url: https://github.com/milantech-gitops/sampleapp
-      ref: origin/develop
-      subPath: config-step-6-vaultapp
-      # secretRef:
-      #   name: secret-sampleapp
+      url: https://github.com/milantech-gitops/infra-k8s-system
+      ref: origin/main
+      subPath: instances/apps/vault
 
   template:
   - ytt:
       ignoreUnknownComments: true
 
   deploy:
-   # use kapp to deploy resources
+  # use kapp to deploy resources
   - kapp:
       # override namespace for all resources (optional)
       # intoNs: another-ns1
