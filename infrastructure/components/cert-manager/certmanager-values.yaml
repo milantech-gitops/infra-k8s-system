@@ -7,4 +7,4 @@
 # all namespaces are watched
 installCRDs: true
 extraArgs:
-  - --cluster-resource-namespace=cert-manager
+  - --cluster-resource-namespace=
