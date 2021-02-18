@@ -61,7 +61,7 @@ spec:
   #   value: "true"
 
   # Specify the ServiceAccount where the Vault Pod and the Bank-Vaults configurer/unsealer is running
-  serviceAccount: vaultcr-ns-sa-stg
+  serviceAccount: pbe-$(AppServiceAccountName)
 
   # Specify the Service's type where the Vault Service is exposed
   # Please note that some Ingress controllers like https://github.com/kubernetes/ingress-gce
@@ -169,8 +169,8 @@ spec:
         roles:
           # Allow every pod in the default namespace to use the secret kv store
           - name: default
-            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system","vaultcr-ns-sa-stg"]
-            bound_service_account_namespaces: ["default", "vswh", "vault-system", "realtime-stg"]
+            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system",pbe-$(AppServiceAccountName)]
+            bound_service_account_namespaces: ["default", "vswh", "vault-system", "${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=cluster001}"]
             policies: allow_secrets
             ttl: 1h
           # Allow the cert-manager pod in the cert-manager namespace to use the PKI engine
