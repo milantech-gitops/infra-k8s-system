@@ -26,6 +26,10 @@ spec:
       cluster_secapp: ${cluster_secapp:=na}
       vault_sa: ${vault_sa:=vaultcr-sa}
       vault_role: ${vault_role:=arn:aws:iam::644712362974:role/node117-playbx-us-west-2}
+
+
+  ### Reserved for Configmaps ####
+  ################################
   # postBuild:
   #   substitute:
   #     cluster_cloud_provider: '$(CLUSTER_CLOUD_PROVIDER)'
