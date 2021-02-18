@@ -12,7 +12,7 @@ spec:
         roles:
           # Allow every pod in the default namespace to use the secret kv store
           - name: default
-            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system","pbe-${vault_sa:=vaultcr-sa}"]
-            bound_service_account_namespaces: ["default", "vswh", "vault-system","${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=default}"]
+            bound_service_account_names: ["default", "vault-secrets-webhook", "vault", "vault-system",'pbe-${vault_sa:=vaultcr-sa}']
+            bound_service_account_namespaces: ["default", "vswh", "vault-system",'${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=default}']
             policies: ["allow_secrets", "allow_pki"]
             ttl: 10m
