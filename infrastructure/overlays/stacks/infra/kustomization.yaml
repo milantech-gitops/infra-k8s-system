@@ -4,3 +4,4 @@ resources:
 - certmanager.yaml
 - kubeview.yaml
 - metallb.yaml
+- kapp.yaml
