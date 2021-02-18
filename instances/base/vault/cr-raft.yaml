@@ -137,7 +137,7 @@ spec:
         tls_cert_file: /vault/tls/server.crt
         tls_key_file: /vault/tls/server.key
     api_addr: https://pbe-vault.$(AnnotationsCostCenter)-$(AnnotationsEnv)-$(AnnotationsCluster):8200
-    cluster_addr: https://$(POD_NAME):8201
+    cluster_addr: https://$MY_POD_NAMESPACE.MY_POD_NAME:8201
     ui: true
 
   statsdDisabled: true
@@ -205,3 +205,16 @@ spec:
   vaultEnvsConfig:
     - name: VAULT_LOG_LEVEL
       value: debug
+
+    - name: MY_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: MY_POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
