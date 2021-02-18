@@ -3,5 +3,5 @@ kind: Kustomization
 namespace: vault-system
 
 resources:
-- ../../apps/rbac.yaml
-- ../../apps/deployment.yaml
+- rbac.yaml
+- deployment.yaml
