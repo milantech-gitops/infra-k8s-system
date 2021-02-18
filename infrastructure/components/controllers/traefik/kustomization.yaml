@@ -13,3 +13,6 @@ configMapGenerator:
 
 configurations:
   - kustomizeconfig.yaml
+
+transformers:
+  - ../../labels.yaml

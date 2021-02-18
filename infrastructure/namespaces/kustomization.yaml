@@ -7,6 +7,6 @@ resources:
 - metallb.yaml
 - kapp.yaml
 - vault.yaml
-# - traefik.yaml
+- traefik.yaml
 # - powerdns.yaml
 # - externaldns.yaml
