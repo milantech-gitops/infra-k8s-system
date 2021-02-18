@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vaultcr-sa
+  labels:
+    app: vaultcr
+  # namespace: vaultcr
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: vaultcr-role
+  labels:
+    app: vaultcr
+  # namespace: vaultcr
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: vaultcr-role-binding
+  labels:
+    app: vaultcr
+  # namespace: vaultcr
+subjects:
+- kind: ServiceAccount
+  name: vaultcr-sa
+  # namespace: vaultcr
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: vaultcr-role
