@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-# - infrastructure.yaml
-# - instances.yaml
+- infrastructure.yaml
+- instances.yaml
 
 # generatorOptions:
 #   disableNameSuffixHash: true
