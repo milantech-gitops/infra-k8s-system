@@ -18,6 +18,7 @@ spec:
       cluster_cloud_provider: '$(CLUSTER_CLOUD_PROVIDER)'
       cluster_name: '$(CLUSTER_NAME)'
       cluster_aws_account: '$(CLUSTER_AWS_ACCOUNT)'
+      cluster_stacks: '$(CLUSTER_STACKS)'
       cluster_cc: '$(CLUSTER_COST_CENTER)'
       cluster_dept: '$(CLUSTER_DEPARTMENT)'
       cluster_region: '$(CLUSTER_REGION)'

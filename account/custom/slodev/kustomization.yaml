@@ -49,6 +49,14 @@ vars:
     name: cluster-config-map
 
 - fieldref:
+    fieldpath: data.cluster_stacks
+  name: CLUSTER_STACKS
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: cluster-config-map
+
+- fieldref:
     fieldpath: data.cost_center
   name: CLUSTER_COST_CENTER
   objref:

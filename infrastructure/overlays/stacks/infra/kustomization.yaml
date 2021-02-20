@@ -8,3 +8,6 @@ resources:
 - kubeview.yaml
 - metallb.yaml
 - traefik.yaml
+
+transformers:
+- ../../../labels.yaml
