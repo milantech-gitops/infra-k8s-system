@@ -5,6 +5,3 @@ resources:
 # - kapp.yaml
 ### Enabled Components ###
 - metallb.yaml
-
-transformers:
-- ../../../labels.yaml

@@ -1,0 +1,8 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: ${cluster_name:=default}
+  namespace: flux-system
+resources:
+# Infra Stack
+- ./infrastructure/overlays/stacks/${cluster_stacks:=custom}

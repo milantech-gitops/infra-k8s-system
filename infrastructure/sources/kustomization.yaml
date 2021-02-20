@@ -10,4 +10,4 @@ resources:
   - aecharts.yaml
 
 transformers:
-- ../labels.yaml
+- labels.yaml
