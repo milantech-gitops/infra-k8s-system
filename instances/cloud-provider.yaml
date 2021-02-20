@@ -18,6 +18,7 @@ spec:
       cluster_cloud_provider: ${cluster_cloud_provider:=aws}
       cluster_name: ${cluster_name:=default}
       cluster_aws_account: ${cluster_aws_account:=sandbox}
+      cluster_stacks: '$(CLUSTER_STACKS)'
       cluster_cc: ${cluster_cc:=infra}
       cluster_dept: ${cluster_dept:=Engineering}
       cluster_region: ${cluster_region:=us-east-1}
