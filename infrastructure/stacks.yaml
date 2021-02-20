@@ -3,6 +3,11 @@ kind: Kustomization
 metadata:
   name: ${cluster_name:=default}
   namespace: flux-system
-resources:
-# Infra Stack
-- ./infrastructure/overlays/stacks/${cluster_stacks:=custom}
+spec:
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./infrastructure/overlays/stacks/${cluster_stacks:=custom}
+  prune: true
+  validation: client
