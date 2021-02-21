@@ -58,7 +58,7 @@ spec:
   # Specify the Service's type where the Vault Service is exposed
   # Please note that some Ingress controllers like https://github.com/kubernetes/ingress-gce
   # forces you to expose your Service on a NodePort
-  serviceType: ClusterIP
+  serviceType: NodePort
 
     ## Force load balancer IP
     # loadBalancerIP: 1.2.3.4
