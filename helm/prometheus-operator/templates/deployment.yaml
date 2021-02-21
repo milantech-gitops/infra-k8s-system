@@ -1,0 +1,58 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "name" . }}
+{{ include "labels.stakater" . | indent 4 }}
+{{ include "labels.chart" . | indent 4 }}
+  name: {{ template "name" . }}
+spec:
+  replicas: {{ .Values.prometheusOperator.deployment.replicas }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "name" . }}
+    spec:
+    {{- if .Values.prometheusOperator.tolerations }}
+      tolerations:
+{{ toYaml .Values.prometheusOperator.tolerations | indent 8 -}}
+      {{- end }}      
+      containers:
+      - args:
+        - --kubelet-service={{ .Values.prometheusOperator.deployment.kubeletService }}
+        - --config-reloader-image={{ .Values.prometheusOperator.deployment.reloaderImage }}
+        {{- if .Values.prometheusOperator.deployment.prometheusConfigReloaderImage }}
+        - --prometheus-config-reloader={{ .Values.prometheusOperator.deployment.prometheusConfigReloaderImage }}:{{ .Values.prometheusOperator.deployment.prometheusConfigReloaderTag }}
+        {{- end }}
+        image: "{{ .Values.prometheusOperator.image.name }}:{{ .Values.prometheusOperator.image.tag }}"
+        name: {{ template "name" . }}
+        ports:
+        - containerPort: 8080
+          name: http
+        {{- with .Values.prometheusOperator.deployment.resources }}
+        resources:
+          {{- with .limits }}
+          limits:
+            {{- with .cpu }}
+            cpu: {{ . }}
+            {{- end }}
+            {{- with .memory }}
+            memory: {{ . }}
+            {{- end }}
+          {{- end }}
+          {{- with .requests }}
+          requests:
+            {{- with .cpu }}
+            cpu: {{ . }}
+            {{- end }}
+            {{- with .memory }}
+            memory: {{ . }}
+            {{- end }}
+          {{- end }}
+        {{- end }}
+      securityContext: {}
+      serviceAccountName: {{ template "name" . }}
+      {{- if .Values.prometheusOperator.deployment.nodeSelector }}
+      nodeSelector:
+        {{ .Values.prometheusOperator.deployment.nodeSelector.key }}: "{{ .Values.prometheusOperator.deployment.nodeSelector.value }}"
+      {{- end }}

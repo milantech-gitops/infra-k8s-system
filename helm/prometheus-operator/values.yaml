@@ -1,0 +1,23 @@
+prometheusOperator:
+  tolerations: {}
+  labels:
+    group: com.stakater.platform
+    provider: stakater
+    version: 0.17.0
+  image:
+    name: quay.io/coreos/prometheus-operator
+    tag: v0.17.0
+  deployment:
+    replicas: 1
+    kubeletService: kube-system/kubelet
+    reloaderImage: quay.io/coreos/configmap-reload:v0.0.1
+    resources:
+      limits:
+        cpu: 200m
+        memory: 100Mi
+      requests:
+        cpu: 100m
+        memory: 50Mi
+    # nodeSelector:
+    #  key: failure-domain.beta.kubernetes.io/zone
+    #  value: us-west-2a
