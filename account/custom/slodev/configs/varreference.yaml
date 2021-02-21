@@ -8,6 +8,8 @@ varReference:
   kind: Kustomization
 - path: spec/postBuild/substitute/cluster_aws_account
   kind: Kustomization
+- path: spec/postBuild/substitute/cluster_stacks
+  kind: Kustomization
 - path: spec/postBuild/substitute/cluster_cc
   kind: Kustomization
 - path: spec/postBuild/substitute/cluster_dept
