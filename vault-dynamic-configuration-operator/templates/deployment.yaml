@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-dynamic-configuration-operator
+  labels:
+    app: vault-dynamic-configuration-operator
+spec:
+  selector:
+    matchLabels:
+      app: vault-dynamic-configuration-operator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: vault-dynamic-configuration-operator
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - command:
+        - /manager
+        args:
+        - --enable-leader-election
+        - --annotation-prefix={{ .Values.flags.annotationPrefix }}
+        - --target-vault-name={{ .Values.flags.targetVaultName }}
+        - --auto-configure-annotation={{ .Values.flags.autoConfigureAnnotation }}
+        - --auto-configuredb-creds-annotation={{ .Values.flags.autoConfigureDBCredsAnnotation }}
+        - --token-ttl={{ .Values.flags.tokenTTL }}
+        {{- if .Values.flags.boundRolesToAllNamespaces }}
+        - --bound-roles-to-all-namespaces
+        {{- end }}
+        ports:
+        - name: http-metrics
+          containerPort: 8080
+        image: patoarvizu/vault-dynamic-configuration-operator:{{ .Values.imageVersion }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        name: manager
+        env:
+        - name: WATCH_NAMESPACE
+          value: {{ .Values.watchNamespace }}
+        {{- if .Values.resources }}
+        resources: {{ toYaml .Values.resources | nindent 10 }}
+        {{- end }}

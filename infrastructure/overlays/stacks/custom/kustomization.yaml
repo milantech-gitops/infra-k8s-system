@@ -6,3 +6,4 @@ resources:
 ### Enabled Components ###
 - metallb.yaml
 - vault.yaml
+- vault-config.yaml
