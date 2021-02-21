@@ -8,6 +8,7 @@ resources:
   - traefik.yaml
   - kubeview.yaml
   - aecharts.yaml
+  - patoarvizu.yaml
 
 transformers:
 - labels.yaml
