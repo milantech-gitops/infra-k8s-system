@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: ${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=cluster001}
 resources:
 - namespace.yaml
-- ../../../../custom
+- ../../../custom
 namePrefix: ${cluster_cc:=aws}-
 transformers:
 - labels.yaml
