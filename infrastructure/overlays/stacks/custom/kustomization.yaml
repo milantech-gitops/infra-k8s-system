@@ -4,5 +4,5 @@ resources:
 ### Disabled Components ###
 # - kapp.yaml
 ### Enabled Components ###
-# - metallb.yaml
+- metallb.yaml
 - vault.yaml
