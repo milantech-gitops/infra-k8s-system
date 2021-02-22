@@ -30,3 +30,5 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-config-map
+      - kind: ConfigMap
+        name: instance-config-map
