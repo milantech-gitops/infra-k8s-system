@@ -26,6 +26,7 @@ configMapGenerator:
 # into the Profiles custom resource.
 configurations:
 - configs/varreference.yaml
+- configs/namereference.yaml
 
 #Cluster related parameters
 vars:
