@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
 - vars/instance-configmap.yaml
+- vars/cluster-configmap.yaml
 - infrastructure.yaml
 - instances.yaml
 
@@ -14,13 +15,16 @@ resources:
 configMapGenerator:
 - envs:
   - vars/cluster-config-map.env
+  - vars/properties-cluster-config-map.env
   name: cluster-config-map
-  # behavior: merge
+  behavior: merge
 - envs:
   - vars/instance-config-map.env
   - vars/properties-instance-configmap.env
   name: instance-config-map
   behavior: merge
+- literals:
+  - cluster_name=test
 
 # These vars are used for substituing in the parameters from the config map
 # into the Profiles custom resource.
