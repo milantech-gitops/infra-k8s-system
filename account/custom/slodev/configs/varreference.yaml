@@ -31,3 +31,5 @@ varReference:
 #ConfigMap
 - path: metadata/namespace
   kind: ConfigMap
+- path: metadata/name
+  kind: ConfigMap
