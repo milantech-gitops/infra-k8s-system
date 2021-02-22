@@ -18,6 +18,7 @@ configMapGenerator:
   # behavior: merge
 - envs:
   - vars/instance-config-map.env
+  - vars/properties-instance-configmap.env
   name: instance-config-map
   behavior: merge
 
