@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: instance-config-map
+  name: cluster-config-map
   namespace: default
 data:
   cluster_cloud_provider: aws
-  cluster_aws_accountL: custom
-  cluster_stacksL: custom
-  cluster_nameL: slodev
+  cluster_aws_account: custom
+  cluster_stacks: custom
+  cluster_name: slodev

@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: flux-system
 resources:
-- vars/instance-configmap.yaml
 - vars/cluster-configmap.yaml
+- vars/instance-configmap.yaml
 - infrastructure.yaml
 - instances.yaml
 
@@ -13,18 +13,18 @@ resources:
 
 # Using ConfigMap Generator
 configMapGenerator:
-- envs:
+- name: cluster-config-map
+  envs:
   - vars/cluster-config-map.env
   - vars/properties-cluster-config-map.env
-  name: cluster-config-map
   behavior: merge
-- envs:
+- name: instance-config-map
+  envs:
   - vars/instance-config-map.env
   - vars/properties-instance-configmap.env
-  name: instance-config-map
   behavior: merge
-- literals:
-  - cluster_name=test
+# - literals:
+#   - cluster_name=jeffry
 
 # These vars are used for substituing in the parameters from the config map
 # into the Profiles custom resource.
@@ -34,6 +34,14 @@ configurations:
 
 #Cluster related parameters
 vars:
+- fieldref:
+    fieldpath: data.cluster_cloud_properties
+  name: CLUSTER_CLOUD_PROPERTIES
+  objref:
+    apiVersion: v1
+    kind: ConfigMap
+    name: cluster-config-map
+
 - fieldref:
     fieldpath: data.cluster_cloud_provider
   name: CLUSTER_CLOUD_PROVIDER
