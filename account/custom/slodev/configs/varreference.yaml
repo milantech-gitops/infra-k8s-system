@@ -27,3 +27,7 @@ varReference:
   kind: Kustomization
 - path: spec/postBuild/substitute/vault_sa
   kind: Kustomization
+
+#ConfigMap
+- path: metadata/namespace
+  kind: ConfigMap
