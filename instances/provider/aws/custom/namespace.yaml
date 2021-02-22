@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ${cluster_cc:=aws}-${cluster_aws_account:=staging}-${cluster_name:=cluster001}
+  name: ${cluster_cc:=infra}-${cluster_aws_account:=custom}-${cluster_name:=cluster001}
   labels:
-    environment: ${cluster_aws_account:=stg}
-    costcenter: ${cluster_cc:=aws}
+    environment: ${cluster_aws_account:=custom}
+    costcenter: ${cluster_cc:=infra}
