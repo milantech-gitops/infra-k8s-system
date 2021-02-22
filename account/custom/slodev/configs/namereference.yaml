@@ -4,5 +4,5 @@ nameReference:
 - kind: ConfigMap
   version: v1
   fieldSpecs:
-  - path: spec/postBuild/substituteFrom
+  - path: spec/postBuild/substituteFrom/name
     kind: Kustomization
