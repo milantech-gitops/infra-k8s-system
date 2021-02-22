@@ -27,3 +27,6 @@ spec:
       cluster_secapp: '$(CLUSTER_SEC_APP)'
       vault_sa: '$(VAULT_SA)'
       vault_role: '$(VAULT_ROLE)'
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-config-map
