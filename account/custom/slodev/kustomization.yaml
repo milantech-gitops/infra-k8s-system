@@ -15,7 +15,7 @@ configMapGenerator:
 - envs:
   - vars/cluster-config-map.env
   name: cluster-config-map
-  behavior: merge
+  # behavior: merge
 - envs:
   - vars/instance-config-map.env
   name: instance-config-map
